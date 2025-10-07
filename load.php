@@ -1,5 +1,7 @@
 <?php
 
+$jsonData = include('extract.php');
+
 // Dekodiert die JSON-Daten zu einem Array
 $dataArray = json_decode($jsonData, true);
 
@@ -10,7 +12,7 @@ try {
     $pdo = new PDO($dsn, $username, $password, $options);
 
     // SQL-Query mit Platzhaltern für das Einfügen von Daten
-    $sql = "INSERT INTO parking_data (parkhaus_id, time, phstate, shortfree, belegung_prozent, shortoccupied) VALUES (?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO parking_data (parkhaus_id, phstate, shortfree, belegung_prozent, shortoccupied) VALUES (?, ?, ?, ?, ?)";
 
     // Bereitet die SQL-Anweisung vor
     $stmt = $pdo->prepare($sql);
@@ -19,7 +21,6 @@ try {
     foreach ($dataArray as $item) {
         $stmt->execute([
             $item['parkhaus_id'],
-            $item['time'],
             $item['phstate'],
             $item['shortfree'],
             $item['belegung_prozent'],
