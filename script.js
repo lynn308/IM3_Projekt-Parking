@@ -18,4 +18,78 @@ fetch('https://im3-projekt.lynnhartmann.ch/unload.php')
         console.error('Error:', error);
     });
 
+document.addEventListener('DOMContentLoaded', async () => {
+  const chartsContainer = document.getElementById('charts');
+  const toInt = v => { const n = parseInt(v,10); return Number.isFinite(n) ? n : 0; };
 
+  try {
+    const res = await fetch('https://im3-projekt.lynnhartmann.ch/unload.php');
+    const raw = await res.json();
+    console.log('API response:', raw);
+
+    if (!Array.isArray(raw) || raw.length === 0) {
+      chartsContainer.textContent = 'Keine Daten vorhanden.';
+      return;
+    }
+
+    // Map parkhaus_id -> aktuellster Eintrag
+    const latestById = new Map();
+    raw.forEach(row => {
+      const id = row.parkhaus_id ?? row.parkhausId ?? row.id;
+      // fallback: falls kein timestamp, setze epoch 0
+      const timeVal = row.messzeit ?? row.time ?? null;
+      const time = timeVal ? new Date(timeVal).getTime() : 0;
+
+      if (!latestById.has(id)) {
+        latestById.set(id, { row, time });
+      } else {
+        const existing = latestById.get(id);
+        if (time > existing.time) {
+          latestById.set(id, { row, time });
+        }
+      }
+    });
+
+    // Für jeden neuesten Eintrag Chart erstellen
+    latestById.forEach(({ row }) => {
+      const freie = toInt(row.freie_plaetze ?? row.shortfree ?? 0);
+      const belegte = toInt(row.belegte_plaetze ?? row.shortoccupied ?? 0);
+      const name = row.parkhaus_name ?? `Parkhaus ${row.parkhaus_id ?? ''}`;
+
+      const card = document.createElement('div');
+      card.className = 'chart-card';
+      const title = document.createElement('h2');
+      title.textContent = name;
+      const canvas = document.createElement('canvas');
+
+      card.appendChild(title);
+      card.appendChild(canvas);
+      chartsContainer.appendChild(card);
+
+      new Chart(canvas, {
+        type: 'pie',
+        data: {
+          labels: ['Belegt', 'Frei'],
+          datasets: [{
+            data: [belegte, freie],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.9)',
+              'rgba(75, 192, 192, 0.9)'
+            ],
+            hoverOffset: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: 'top' }
+          }
+        }
+      });
+    });
+
+  } catch (err) {
+    console.error(err);
+    chartsContainer.textContent = 'Fehler beim Laden der Daten — siehe Konsole.';
+  }
+});
