@@ -18,4 +18,6 @@ fetch('https://im3-projekt.lynnhartmann.ch/unload.php')
         console.error('Error:', error);
     });
 
+    
+
 
