@@ -17,3 +17,5 @@ fetch('https://im3-projekt.lynnhartmann.ch/unload.php')
     .catch(error => {
         console.error('Error:', error);
     });
+
+

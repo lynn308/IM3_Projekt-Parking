@@ -1,3 +1,17 @@
-background-color { 
-    background-color: #ff1f1f; 
+body {
+    background-color:#747474;
+    color: #FFF;
+    font-family: "Passion One";
+    font-size: 120px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+
+#myChart {
+  width: 300px;   /* gewünschte Breite */
+  height: 300px;  /* gewünschte Höhe */
+  margin: 0 auto; /* zentriert */
+  display: block;
 }
