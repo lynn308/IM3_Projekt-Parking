@@ -12,8 +12,7 @@ try {
     // Erstellt eine neue PDO-Instanz mit der Konfiguration aus config.php
     $pdo = new PDO($dsn, $username, $password, $options);
 
-    // SQL-Query, um Daten basierend auf dem Standort auszuwählen, sortiert nach Zeitstempel
-    // Verwende ein Fragezeichen (?) anstelle eines benannten Parameters
+    // SQL-Query, um nur die neuesten Daten pro Parkhaus zu erhalten
     $sql = "SELECT
     ph.id   AS parkhaus_id,
     ph.phname              AS parkhaus_name,
@@ -30,6 +29,12 @@ FROM
     parkhaeuser AS ph
 LEFT JOIN
     parking_data AS pd ON ph.id = pd.parkhaus_id
+    AND pd.time = (
+        SELECT MAX(time) 
+        FROM parking_data 
+        WHERE parkhaus_id = ph.id
+    )
+ORDER BY ph.id
 ";
 
     // Bereitet die SQL-Anweisung vor
