@@ -9,9 +9,23 @@ body {
 }
 
 
-#myChart {
-  width: 300px;   /* gewünschte Breite */
-  height: 300px;  /* gewünschte Höhe */
-  margin: 0 auto; /* zentriert */
-  display: block;
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  align-items: start;
 }
+
+.chart-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+.chart-card h2 {
+  font-size: 1rem;
+  margin: 0 0 8px 0;
+  text-align: center;
+}
+
