@@ -172,6 +172,7 @@ h1 {
   top: 50%;
   left: 50%;
   z-index: 1000;     /* Overlay liegt über anderen Elementen */
+  display: none;
 }
 
 .close-btn {
