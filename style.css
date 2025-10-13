@@ -6,7 +6,34 @@ body {
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    margin: 0;
+    height: 100vh;
+    background: #818181; /* grauer Hintergrund */
+    display: flex;
+    justify-content: center; /* horizontal zentrieren */
+    align-items: center;
 }
+
+/*Rahmen Titelseite*/
+  .frame {
+  width: 90vw;              /* responsiv: nimmt 90% der Bildschirmbreite */
+  max-width: 1200px;        /* optional: begrenzt auf sinnvolle Breite */
+  min-height: 90vh;         /* Höhe ebenfalls mit Abstand */
+  background: #818181;      /* grauer Innenbereich — falls du das willst */
+  border: 27px solid #fff;  /* der weiße Rahmen */
+  border-radius: 2px;       /* leicht abgerundet wie im Figma */
+  box-sizing: border-box;   /* verhindert, dass border die Größe verändert */
+}
+
+
+
+
+
+
+
+
+
+
 
 
 .charts-grid {
