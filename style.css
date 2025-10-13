@@ -38,6 +38,7 @@ line-height: normal;
 /*Rahmen Titelseite*/
   .frame {
   width: 98vw;
+  min-height: 1060px;
   max-width: none;
   background: #818181;
   border: 27px solid #fff;
@@ -106,7 +107,7 @@ line-height: normal;
   border-radius: 10px;
   padding: 18px 32px;
   width: 80%;
-  max-width: 1150px;
+  max-width: 700px;
   cursor: pointer;
   transition: 0.2s ease;
 }
@@ -125,16 +126,6 @@ line-height: normal;
   justify-content: center;
   gap: 30px;
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -232,8 +223,6 @@ line-height: normal;
   width: 260px !important;
   height: 260px !important;
 }
-
-
 
 
 /*Overlay Lage & Tagesdurchschnitt*/
