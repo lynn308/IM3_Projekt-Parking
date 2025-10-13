@@ -4,26 +4,50 @@ body {
     font-family: "Passion One";
     font-size: 120px;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 40;
     line-height: normal;
     margin: 0;
     height: 100vh;
     background: #818181; /* grauer Hintergrund */
     display: flex;
-    justify-content: center; /* horizontal zentrieren */
+    justify-content: flex-start; /* horizontal zentrieren */
     align-items: center;
+    flex-direction: column; /* Elemente untereinander anordnen */
+}
+
+h1 {
+  font-size: 190px;          /* Größe nur für h1 */
+  font-weight: bold;        /* optional */
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  color: white;             /* falls du Titel unabhängig stylen willst */
 }
 
 /*Rahmen Titelseite*/
   .frame {
-  width: 90vw;              /* responsiv: nimmt 90% der Bildschirmbreite */
-  max-width: 1200px;        /* optional: begrenzt auf sinnvolle Breite */
-  min-height: 90vh;         /* Höhe ebenfalls mit Abstand */
-  background: #818181;      /* grauer Innenbereich — falls du das willst */
-  border: 27px solid #fff;  /* der weiße Rahmen */
-  border-radius: 2px;       /* leicht abgerundet wie im Figma */
-  box-sizing: border-box;   /* verhindert, dass border die Größe verändert */
+  width: 98vw;
+  max-width: none;
+  background: #818181;
+  border: 27px solid #fff;
+  border-radius: 2px;
+  box-sizing: border-box;
+  padding: 300px 60px;   /* vorher: 40px → jetzt deutlich größer innen */
+  margin: 0 auto 40px auto;
 }
+
+
+
+
+.charts-grid {
+  width: 90vw;
+  max-width: 1200px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
 
 
 
