@@ -21,12 +21,7 @@ fetch('https://im3-projekt.lynnhartmann.ch/unload_single.php')
 
 document.addEventListener('DOMContentLoaded', async () => {
   const chartsContainer = document.getElementById('charts');
-
-  // Hilfsfunktion, um sicher Zahlen zu parsen
-  const toInt = v => {
-    const n = parseInt(v, 10);
-    return Number.isFinite(n) ? n : 0;
-  };
+  const toInt = v => { const n = parseInt(v,10); return Number.isFinite(n) ? n : 0; };
 
   try {
     const res = await fetch('https://im3-projekt.lynnhartmann.ch/unload.php');
@@ -38,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
 
-    // Map: parkhaus_id -> aktuellster Eintrag
+    // Map parkhaus_id -> aktuellster Eintrag
     const latestById = new Map();
     raw.forEach(row => {
       const id = row.parkhaus_id ?? row.parkhausId ?? row.id;
@@ -59,24 +54,27 @@ document.addEventListener('DOMContentLoaded', async () => {
     latestById.forEach(({ row }) => {
       const freie = toInt(row.freie_plaetze ?? row.shortfree ?? 0);
       const belegte = toInt(row.belegte_plaetze ?? row.shortoccupied ?? 0);
-
-      // Parkhaus "nicht verfügbar" überspringen
-      const status = row.phstate ?? '';
-      if (status.toLowerCase() === 'nicht verfügbar') return;
+      const name = row.parkhaus_name ?? `Parkhaus ${row.parkhaus_id ?? ''}`;
 
       // Card + Titel + Canvas
       const card = document.createElement('div');
       card.className = 'chart-card';
 
       const title = document.createElement('h2');
-      const parkhausId = row.parkhaus_id ?? '';
-      const parkhausName = row.parkhaus_name ?? 'Unbekannt';
-      title.textContent = `${parkhausId} – ${parkhausName}`; // Titel mit ID + Name
-
+      title.textContent = name;
       const canvas = document.createElement('canvas');
 
+      // 🔹 Button direkt hier erzeugen:
+      const button = document.createElement('button');
+      button.textContent = 'Details';
+      button.addEventListener('click', () => {
+        alert(`Details für Parkhaus ${parkhausId} – ${parkhausName}`);
+      });
+
+      // Elemente zusammenbauen
       card.appendChild(title);
       card.appendChild(canvas);
+      card.appendChild(button);
       chartsContainer.appendChild(card);
 
       // Chart.js Pie-Chart
