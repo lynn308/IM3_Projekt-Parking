@@ -37,15 +37,16 @@ line-height: normal;
 }
 /*Rahmen Titelseite*/
   .frame {
+  position: relative; /* ← wichtig, damit .scene sich relativ dazu positioniert */
   width: 98vw;
-  min-height: 1060px;
+  min-height: 920px;
   max-width: none;
   background: #818181;
   border: 27px solid #fff;
   border-radius: 2px;
   box-sizing: border-box;
-  padding: 400px 60px;   /* vorher: 40px → jetzt deutlich größer innen */
-  margin: 0 auto 40px auto;
+  padding: 400px 60px;   
+  margin: 5px auto 40px auto;
 }
 
 .p-icon {
@@ -84,18 +85,21 @@ line-height: normal;
   font-weight: bold;
   border: 4px solid white;
   border-radius: 10px;
-  padding: 14px 28px;
+  padding: 14px 30px;
   font-size: 20px;
-  text-align: center;
+  text-align: left;
   appearance: none; /* entfernt Standardpfeil */
   cursor: pointer;
   width: 240px;
 }
 
+
 .select-box:focus {
   outline: none;
   box-shadow: 0 0 0 3px #66bfff;
 }
+
+
 
 /* Hauptbutton */
 .action-button {
@@ -279,3 +283,40 @@ line-height: normal;
   margin: 0;
 }
 
+/* Szene fixieren, damit sie nicht den Rahmen nach unten zieht */
+.scene {
+  position: absolute;
+  bottom: 35px;         /* Abstand vom unteren weißen Rahmen */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+/* Baum links */
+.scene .baum {
+  position: absolute;
+  left: 40px;
+  bottom: 0;
+}
+
+/* Parkuhr rechts */
+.scene svg:last-of-type {
+  position: absolute;
+  right: 40px;
+  bottom: 0;
+}
+
+/* Bank mittig */
+.scene svg:nth-of-type(2) {
+  position: relative;
+  z-index: 2;
+}
+
+/* SVG-Größe */
+.scene svg {
+  max-height: 420px;
+  height: auto;
+}

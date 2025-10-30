@@ -105,3 +105,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     chartsContainer.textContent = 'Fehler beim Laden der Daten — siehe Konsole.';
   }
 });
+
