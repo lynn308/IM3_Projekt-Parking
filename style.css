@@ -1,43 +1,54 @@
+/*Allgemeiner Style*/
 body {
-    background-color:#747474;
-    color: #FFF;
-    font-family: "Passion One";
-    font-size: 120px;
-    font-style: normal;
-    font-weight: 40;
-    line-height: normal;
-    margin: 0;
-    height: 100vh;
-    background: #818181; /* grauer Hintergrund */
-    display: flex;
-    justify-content: flex-start; /* horizontal zentrieren */
-    align-items: center;
-    flex-direction: column; /* Elemente untereinander anordnen */
+  background-color: #818181;
+  color: #FFF;
+  font-family: "Passion One", sans-serif;
+  font-size: 120px;
+  font-style: normal;
+  font-weight: 40;
+  line-height: normal;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
 }
 
 h1 {
-  font-size: 190px;          /* Größe nur für h1 */
-  font-weight: bold;        /* optional */
+  font-size: 190px;
+  font-weight: bold;
   margin: 0;
   padding: 0;
   text-align: center;
-  color: white;  
-  margin-top: -400px;  
-  font-family: "Passion One", sans-serif;       
+  color: white;
+  margin-top: -400px;
 }
 
-p{
+p {
   color: #FFF;
-text-align: center;
-font-family: "Passion One";
-font-size: 24px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
+  text-align: center;
+  font-family: "Passion One", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
-/*Rahmen Titelseite*/
-  .frame {
-  position: relative; /* ← wichtig, damit .scene sich relativ dazu positioniert */
+
+
+
+
+
+
+/*Inhalt vom weissen Rahmen*/
+:root {
+  --scene-h: clamp(150px, 28vw, 420px);
+  --scene-gap: clamp(16px, 3vw, 35px);
+  --scene-side: clamp(10px, 4vw, 40px);
+}
+
+.weisser-rahmen {
+  position: relative;
   width: 98vw;
   min-height: 920px;
   max-width: none;
@@ -45,41 +56,44 @@ line-height: normal;
   border: 27px solid #fff;
   border-radius: 2px;
   box-sizing: border-box;
-  padding: 400px 60px;   
+  padding: 400px 60px calc(var(--scene-h) + var(--scene-gap));
   margin: 5px auto 40px auto;
 }
 
+/*Inhalt vom weissen Rahmen (Titel Parkinator)*/
 .p-icon {
-  width: 1em;             /* passt SVG an Textgröße an */
+  width: 1em;
   height: 1em;
   display: inline-block;
   vertical-align: middle;
   margin-right: -45px;
 }
 
-.title-text {
+.titel-text {
   display: inline-block;
   line-height: 1;
 }
 
-.controls {
+.rahmen-inhalt {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
   margin-top: 40px;
+  margin-bottom: clamp(24px, calc(var(--scene-h) * 0.25), 140px);
+  position: relative;
+  z-index: 1;
 }
 
-/* Container für die beiden Dropdowns */
-.select-group {
+/*Inhalt vom weissen Rahmen (Auswahl-Buttons)*/
+.auswahl-buttons {
   display: flex;
   gap: 40px;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-/* Dropdown-Boxen */
-.select-box {
+.auswahl-button {
   background: #0086EC;
   color: white;
   font-weight: bold;
@@ -87,22 +101,21 @@ line-height: normal;
   border-radius: 10px;
   padding: 14px 30px;
   font-size: 20px;
-  text-align: left;
-  appearance: none; /* entfernt Standardpfeil */
+  text-align: center;
+  appearance: none;
   cursor: pointer;
   width: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-
-.select-box:focus {
+.auswahl-button:focus {
   outline: none;
   box-shadow: 0 0 0 3px #66bfff;
 }
 
-
-
-/* Hauptbutton */
-.action-button {
+.belegung-anzeige-button {
   background: #0086EC;
   color: white;
   font-weight: 800;
@@ -116,12 +129,109 @@ line-height: normal;
   transition: 0.2s ease;
 }
 
-.action-button:hover {
+.belegung-anzeige-button:hover {
   background: #0073cc;
+}
+
+/*Inhalt vom weissen Rahmen (Dropdowbn-Menüs)*/
+.uhrzeit-dropdown {
+  position: absolute;
+  z-index: 9999;
+  background: #0086EC;
+  color: #fff;
+  border: 4px solid #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  overflow-y: auto;
+  box-sizing: border-box;
+  max-height: calc(7 * 48px);
+  font-family: "Passion One", sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: right;
+}
+
+.uhrzeit-dropdown__item {
+  padding: 10px 20px;
+  line-height: 1.3;
+  cursor: pointer;
+  text-align: left;
+}
+
+.uhrzeit-dropdown__item:hover {
+  background: #0073cc;
+}
+
+.wochentag-dropdown {
+  position: absolute;
+  z-index: 9999;
+  background: #0086EC;
+  color: #fff;
+  border: 4px solid #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  box-sizing: border-box;
+  font-family: "Passion One", sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: right;
+}
+
+.wochentag-dropdown__item {
+  padding: 10px 20px;
+  line-height: 1.3;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.wochentag-dropdown__item:hover {
+  background: #0073cc;
+}
+
+/*Inhalt vom weissen Rahmen (Baum, Bank und Parkuhr)*/
+.deko-elemente {
+  position: absolute;
+  bottom: var(--scene-gap);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  z-index: 0;
+}
+
+.deko-elemente .baum {
+  position: absolute;
+  left: -35px;
+  bottom: 0;
+}
+
+.deko-elemente .parkuhr {
+  position: absolute;
+  right: -20px;
+  bottom: 0;
+}
+
+.deko-elemente .bank {
+  position: relative;
+  z-index: 0;
+}
+
+.deko-elemente svg {
+  max-height: var(--scene-h);
+  height: auto;
 }
 
 
 
+
+
+
+
+/*Charts Bereich*/
 .charts-grid {
   width: 90vw;
   max-width: 1200px;
@@ -130,8 +240,6 @@ line-height: normal;
   justify-content: center;
   gap: 30px;
 }
-
-
 
 #charts {
   display: flex;
@@ -146,21 +254,19 @@ line-height: normal;
   border-radius: 16px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
-
-  /* 👉 Nur die Box wird breiter */
-  width: 500px;        /* ⬅️ z. B. von 300 → 420 */
+  width: 420px;
   max-width: 90%;
   box-sizing: border-box;
-
+  position: relative;
   text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Chart bleibt zentriert */
+  align-items: center;
 }
 
 .chart-card canvas {
-  width: 240px !important;   /* Fixiere die Chart-Größe */
-  height: 240px !important;  /* unabhängig von Boxbreite */
+  width: 260px !important;
+  height: 260px !important;
 }
 
 .chart-card h2 {
@@ -169,11 +275,10 @@ line-height: normal;
   color: #333;
 }
 
-/* ⬇️ Button-Styling und Position */
 .chart-card button {
-  position: absolute;        /* ⬅️ ermöglicht freie Platzierung */
-  bottom: 15px;              /* Abstand vom unteren Rand */
-  left: 20px;                /* Abstand vom linken Rand */
+  position: absolute;
+  bottom: 15px;
+  left: 20px;
   padding: 8px 16px;
   background-color: #00aaff;
   color: white;
@@ -191,45 +296,7 @@ line-height: normal;
 
 
 
-
-
-/* Container für alle Charts */
-#charts {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  padding: 20px;
-}
-
-/* Einzelne Karten */
-.chart-card {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-
-  /* Breite der Box */
-  width: 420px;
-  max-width: 90%;
-  box-sizing: border-box;
-
-  position: relative;          /* notwendig für Button absolute Position */
-  text-align: center;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Chart-Größe fixieren, unabhängig von Box */
-.chart-card canvas {
-  width: 260px !important;
-  height: 260px !important;
-}
-
-
-/*Overlay Lage & Tagesdurchschnitt*/
+/*Overlay Fenster*/
 .overlay {
   width: 714px;
   height: 820px;
@@ -238,11 +305,10 @@ line-height: normal;
   border-radius: 16px;
   border: 21px solid #FFF;
   background: #747474;
-
-  position: fixed;   /* bleibt über allem, auch beim Scrollen */
+  position: fixed;
   top: 50%;
   left: 50%;
-  z-index: 1000;     /* Overlay liegt über anderen Elementen */
+  z-index: 1000;
   display: none;
 }
 
@@ -254,11 +320,9 @@ line-height: normal;
   background: #D9D9D9;
   border: none;
   cursor: pointer;
-
   position: absolute;
   top: 15px;
   right: 15px;
-
   font-size: 20px;
   line-height: 30px;
   text-align: center;
@@ -269,54 +333,13 @@ line-height: normal;
   width: 70px;
   height: 37px;
   flex-shrink: 0;
-
   color: #FFF;
   font-family: "Passion One", sans-serif;
   font-size: 32px;
-  font-style: normal;
   font-weight: 700;
-  line-height: normal;
-
   position: absolute;
   top: 20px;
   left: 20px;
   margin: 0;
 }
 
-/* Szene fixieren, damit sie nicht den Rahmen nach unten zieht */
-.scene {
-  position: absolute;
-  bottom: 35px;         /* Abstand vom unteren weißen Rahmen */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-}
-
-/* Baum links */
-.scene .baum {
-  position: absolute;
-  left: 40px;
-  bottom: 0;
-}
-
-/* Parkuhr rechts */
-.scene svg:last-of-type {
-  position: absolute;
-  right: 40px;
-  bottom: 0;
-}
-
-/* Bank mittig */
-.scene svg:nth-of-type(2) {
-  position: relative;
-  z-index: 2;
-}
-
-/* SVG-Größe */
-.scene svg {
-  max-height: 420px;
-  height: auto;
-}

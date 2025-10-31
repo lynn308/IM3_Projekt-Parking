@@ -9,31 +9,34 @@
 </head>
 <body>
 
-    <div class="frame">
+    <div class="weisser-rahmen">
 
-    <h1 class="title">
+    <h1 class="titel">
   <svg class="p-icon" xmlns="http://www.w3.org/2000/svg" width="170" height="170" viewBox="0 0 170 170" fill="none">
     <circle cx="85" cy="85" r="85" fill="#0086EC"/>
     <path d="M96.52 104.24H88.24V140.78H58V29H94.54C107.38 29 116.92 31.94 123.16 37.82C129.4 43.7 132.52 53.36 132.52 66.8C132.52 80.24 129.58 89.84 123.7 95.6C117.82 101.36 108.76 104.24 96.52 104.24ZM99.94 79.94C101.02 77.9 101.56 74.24 101.56 68.96C101.56 63.68 100.96 59.96 99.76 57.8C98.56 55.64 96.16 54.56 92.56 54.56H88.24V83H93.28C96.64 83 98.86 81.98 99.94 79.94Z" fill="white"/>
   </svg>
-  <span class="title-text">arkinator</span>
+  <span class="titel-text">arkinator</span>
 </h1>
 
 <p> Suchst du einen Parkplatz in St.Gallen? Der Parkinator unterstützt dich bei der Parkplatzsuche. Wähle einfach unten den gewünschten Wochentag und die Uhrzeit aus, um zu sehen, wie stark die Parkhäuser und Parkplätze im Durchschnitt zu diesem Zeitpunkt ausgelastet sind.</p>
-<div class="controls">
-  <div class="select-group">
-    <select class="select-box">
-      <option value="" disabled selected hidden>Wochentag</option>
-      <option>Montag</option>
-      <option>Dienstag</option>
-      <option>Mittwoch</option>
-      <option>Donnerstag</option>
-      <option>Freitag</option>
-      <option>Samstag</option>
-      <option>Sonntag</option>
-    </select>
+<div class="rahmen-inhalt">
+  <div class="auswahl-buttons">
+    <select class="auswahl-button select-wochentag">
+  <option value="" disabled selected hidden>Wochentag</option>
+  <option>Montag</option>
+  <option>Dienstag</option>
+  <option>Mittwoch</option>
+  <option>Donnerstag</option>
+  <option>Freitag</option>
+  <option>Samstag</option>
+  <option>Sonntag</option>
+</select>
 
-    <select class="select-box">
+
+    
+
+    <select class="auswahl-button select-uhrzeit">
       <option value="" disabled selected hidden>Uhrzeit</option>
       <option>00:00</option>
       <option>01:00</option>
@@ -62,10 +65,10 @@
     </select>
   </div>
 
-  <button class="action-button">DURCHSCHNITTLICHE BELEGUNG ANZEIGEN</button>
+  <button class="belegung-anzeige-button">DURCHSCHNITTLICHE BELEGUNG ANZEIGEN</button>
 </div>
 
- <div class="scene">
+ <div class="deko-elemente">
       <svg class="baum" xmlns="http://www.w3.org/2000/svg" width="282" height="482" viewBox="0 0 282 482" fill="none">
         <path d="M124.632 243.028H175.395C172.044 356.3 161.037 482 175.395 482C189.753 482 102.443 482 124.632 482C146.822 482 124.632 243.028 124.632 243.028Z" fill="#795D00"/>
         <path d="M106 172.621C106 202.991 82.2711 227.611 53 227.611C23.7289 227.611 0 202.991 0 172.621C0 142.251 23.7289 117.631 53 117.631C82.2711 117.631 106 142.251 106 172.621Z" fill="#128733"/>
@@ -79,7 +82,7 @@
       </svg>
     
 
-    <svg xmlns="http://www.w3.org/2000/svg" width="369" height="211" viewBox="0 0 369 211" fill="none">
+    <svg class="bank" xmlns="http://www.w3.org/2000/svg" width="369" height="211" viewBox="0 0 369 211" fill="none">
   <path d="M32.5478 6.10352e-05H47.2719V113.143H32.5478V6.10352e-05Z" fill="black"/>
   <path d="M17.8238 137.941H32.5478V210.786H17.8238V137.941Z" fill="black"/>
   <path d="M334.778 137.941H349.502V210.786H334.778V137.941Z" fill="black"/>
@@ -107,7 +110,7 @@
 </svg>
 
 
-<svg xmlns="http://www.w3.org/2000/svg" width="152" height="466" viewBox="0 0 152 466" fill="none">
+<svg class="parkuhr" xmlns="http://www.w3.org/2000/svg" width="152" height="466" viewBox="0 0 152 466" fill="none">
 <rect x="68.6045" y="267.441" width="11.6977" height="171.651" fill="#5386A7" stroke="black" stroke-width="2"/>
 <rect x="57.5581" y="248" width="33.3488" height="22.7441" rx="11.3721" fill="#42749A" stroke="black" stroke-width="2"/>
 <rect x="57.5581" y="437.999" width="33.3488" height="22.7441" rx="11.3721" fill="#42749A" stroke="black" stroke-width="2"/>
