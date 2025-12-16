@@ -226,8 +226,19 @@ p {
 }
 
 
+/*Hintergrund Strasse*/
+.strassenbereich {
+  width: 98vw;          
+  margin: 40px auto;   
+  box-sizing: border-box;
+  position: relative;
+}
 
-
+.hintergrund-strasse {
+  width: 100%;
+  height: auto;
+  display: block; 
+}
 
 
 
@@ -342,4 +353,8 @@ p {
   left: 20px;
   margin: 0;
 }
+
+
+
+
 

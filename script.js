@@ -258,11 +258,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   const scrollButton = document.querySelector('.belegung-anzeige-button');
-  const chartsSection = document.getElementById('charts');
+  const strassenbereich = document.querySelector('.strassenbereich');
 
-  if (scrollButton && chartsSection) {
-    scrollButton.addEventListener('click', () => {
-      chartsSection.scrollIntoView({ behavior: 'smooth' });
+  if (!scrollButton || !strassenbereich) return;
+
+  scrollButton.addEventListener('click', () => {
+    const offsetTop =
+      strassenbereich.getBoundingClientRect().top + window.pageYOffset;
+
+    window.scrollTo({
+      top: offsetTop,
+      behavior: 'smooth'
     });
-  }
+  });
 });
