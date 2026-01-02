@@ -431,6 +431,20 @@ p {
   overflow: hidden;                /* damit nichts über den Rand läuft */
 }
 
+.overlay-chart-wrap{
+  margin-top: 16px;
+  width: 100%;
+  height: 260px;        /* Höhe des Diagramms */
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+#overlayDayChart{
+  width: 100% !important;
+  height: 100% !important;
+}
 
 
 
