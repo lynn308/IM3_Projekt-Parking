@@ -380,8 +380,8 @@ p {
 
 /* Canvas kleiner, wie im Layout */
 .chart-card canvas{
-  width: 140px !important;
-  height: 140px !important;
+  width: 240px !important;
+  height: 240px !important;
 }
 
 .road-stage{
@@ -411,6 +411,26 @@ p {
   border: 0;
   display: block;
 }
+
+.overlay{
+  width: 714px;
+  height: 820px;
+  border-radius: 16px;
+  border: 21px solid #FFF;
+  background: #747474;
+
+  position: fixed;                 /* oder absolute, je nachdem was du nutzt */
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: none;
+  z-index: 9999;
+  box-sizing: border-box;
+
+  padding: 24px;                   /* gibt “Innenrand” */
+  overflow: hidden;                /* damit nichts über den Rand läuft */
+}
+
 
 
 

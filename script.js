@@ -8,24 +8,24 @@ const CHART_POS = {
   "P23": { left: 25, top: 18 },
   "P24": { left: 60, top: 18 },
 
-  "P25": { left: 35, top: 29 },
-  "P31": { left: 66, top: 20},
+  "P25": { left: 35, top: 28.5 },
+  "P31": { left: 66, top: 28.5},
 
-  "P32": { left: 58, top: 43 },
+  "P32": { left: 58, top: 38.5 },
 
-  "P33": { left: 70, top: 52 },
-  "P41": { left: 34, top: 52 },
+  "P33": { left: 70, top: 48.5 },
+  "P41": { left: 34, top: 48.5},
 
-  "P42": { left: 55, top: 62 },
+  "P42": { left: 60, top: 58.5 },
 
-  "P43": { left: 32, top: 71 },
-  "P44": { left: 66, top: 71 },
+  "P43": { left: 32, top: 58.5 },
+  "P44": { left: 40, top: 68.5 },
 
-  "P51": { left: 55, top: 82 },
+  "P51": { left: 60, top: 78.5 },
 
-  "P52": { left: 32, top: 90 },
-  "P53": { left: 66, top: 90 },
-  "P54": { left: 40, top: 90 },
+  "P52": { left: 32, top: 78.5 },
+  "P53": { left: 66, top: 88.5 },
+  "P54": { left: 40, top: 88.5 },
 };
 
 const overlay = document.getElementById('overlay');
@@ -38,9 +38,7 @@ closeBtn.addEventListener('click', () => {
   mapFrame.src = ''; // stoppt Google Maps
 });
 
-function openOverlay(row, anchorEl)
-
- {
+function openOverlay(row, anchorEl) {
   overlayTitle.textContent = row.parkhaus_name ?? 'Details';
 
   const lat = row.lat;
@@ -55,23 +53,22 @@ function openOverlay(row, anchorEl)
   }
 
   overlay.style.display = 'block';
-  const r = anchorEl.getBoundingClientRect();
+  overlay.style.opacity = '1';
 
-  // Erst NACH display:block messen
+  const r = anchorEl.getBoundingClientRect();
   const oh = overlay.offsetHeight;
 
-  // Ziel: Overlay oben auf Chart-Höhe, aber im Viewport bleiben
- let top = window.scrollY + r.top + 10;
+  let top = r.top + 10;
 
-const minTop = window.scrollY + 20;
-const maxTop = window.scrollY + window.innerHeight - oh - 20;
-
+  const minTop = 20;
+  const maxTop = window.innerHeight - oh - 20;
 
   if (top < minTop) top = minTop;
   if (top > maxTop) top = maxTop;
 
   overlay.style.top = `${top}px`;
 }
+
 
 
 
@@ -132,12 +129,20 @@ card.appendChild(button);
         labels: ['Belegt', 'Frei'],
         datasets: [{
           data: [belegte, freie],
+          backgroundColor: ['#FF6384', '#37ad27ff'],
           hoverOffset: 6
         }]
       },
       options: {
         responsive: true,
-        plugins: { legend: { position: 'top' } }
+        plugins: { 
+          legend: { position: 'top' ,
+            labels: {
+              font: { 
+                size: 20
+              }
+            }
+           } }
       }
     });
   });
