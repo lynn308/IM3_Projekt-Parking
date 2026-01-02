@@ -143,25 +143,36 @@
 
 
 <section class="strassenbereich">
-  <img
-    class="hintergrund-strasse"
-    src="SVG/Hintergrund_Strasse.svg"
-    alt="hintergrund mit Strasse"
-  />
-
-  <div id="charts" class="charts-grid"></div>
+  <div class="road-stage">
+    <img
+      class="hintergrund-strasse"
+      src="SVG/Hintergrund_Strasse.svg"
+      alt="hintergrund mit Strasse"
+    />
+    <div id="charts" class="charts-overlay"></div>
+  </div>
 </section>
 
 
 
 
-    <div id="overlay" class="overlay">
+
+   <div id="overlay" class="overlay">
   <h2 class="overlay-title">LAGE</h2>
   <button class="close-btn">×</button>
-</div>
-    
 
-   <div id="charts" class="charts-grid"></div>
+  <div class="overlay-content">
+    <div class="map-wrap">
+      <iframe
+        id="mapFrame"
+        class="map-frame"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+</div>
    
    
     <script src="script.js"></script>

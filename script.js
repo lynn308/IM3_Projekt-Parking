@@ -1,89 +1,161 @@
 console.log("Script gestartet");
 
+const CHART_POS = {
+  // Beispiel: parkhaus_id -> { left, top } in Prozent
+  // Diese Werte musst du 1x feinjustieren, dann passt es immer.
+  "P21": { left: 80, top: 5},
+  "P22": { left: 20, top: 10 },
+  "P23": { left: 25, top: 18 },
+  "P24": { left: 60, top: 18 },
+
+  "P25": { left: 35, top: 29 },
+  "P31": { left: 66, top: 20},
+
+  "P32": { left: 58, top: 43 },
+
+  "P33": { left: 70, top: 52 },
+  "P41": { left: 34, top: 52 },
+
+  "P42": { left: 55, top: 62 },
+
+  "P43": { left: 32, top: 71 },
+  "P44": { left: 66, top: 71 },
+
+  "P51": { left: 55, top: 82 },
+
+  "P52": { left: 32, top: 90 },
+  "P53": { left: 66, top: 90 },
+  "P54": { left: 40, top: 90 },
+};
+
+const overlay = document.getElementById('overlay');
+const overlayTitle = overlay.querySelector('.overlay-title');
+const closeBtn = overlay.querySelector('.close-btn');
+const mapFrame = document.getElementById('mapFrame');
+
+closeBtn.addEventListener('click', () => {
+  overlay.style.display = 'none';
+  mapFrame.src = ''; // stoppt Google Maps
+});
+
+function openOverlay(row, anchorEl)
+
+ {
+  overlayTitle.textContent = row.parkhaus_name ?? 'Details';
+
+  const lat = row.lat;
+  const lon = row.lon;
+
+  if (lat != null && lon != null) {
+    const zoom = 16;
+    mapFrame.src =
+      `https://www.google.com/maps?q=${encodeURIComponent(lat + ',' + lon)}&z=${zoom}&output=embed`;
+  } else {
+    mapFrame.src = '';
+  }
+
+  overlay.style.display = 'block';
+  const r = anchorEl.getBoundingClientRect();
+
+  // Erst NACH display:block messen
+  const oh = overlay.offsetHeight;
+
+  // Ziel: Overlay oben auf Chart-Höhe, aber im Viewport bleiben
+ let top = window.scrollY + r.top + 10;
+
+const minTop = window.scrollY + 20;
+const maxTop = window.scrollY + window.innerHeight - oh - 20;
+
+
+  if (top < minTop) top = minTop;
+  if (top > maxTop) top = maxTop;
+
+  overlay.style.top = `${top}px`;
+}
+
+
 
 // DATEN LADEN UND CHARTS ERSTELLEN
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const chartsContainer = document.getElementById('charts');
-  const toInt = v => { const n = parseInt(v, 10); return Number.isFinite(n) ? n : 0; };
+const chartsContainer = document.getElementById('charts');
+const toInt = v => { const n = parseInt(v, 10); return Number.isFinite(n) ? n : 0; };
 
-  try {
-    const res = await fetch('https://im3-projekt.lynnhartmann.ch/unload.php');
-    const raw = await res.json();
-    console.log('API Antwort:', raw);
+function renderCharts(rows) {
+  chartsContainer.innerHTML = ""; // alte Charts entfernen
 
-    // Wenn keine Daten vorhanden sind
-    if (!Array.isArray(raw) || raw.length === 0) {
-      chartsContainer.textContent = 'Keine Daten vorhanden.';
-      return;
+  rows.forEach(row => {
+    const freie = toInt(row.freie_plaetze ?? 0);
+    const belegte = toInt(row.belegte_plaetze ?? 0);
+    const name = row.parkhaus_name ?? `Parkhaus ${row.parkhaus_id ?? ''}`;
+
+    const card = document.createElement('div');
+    card.className = 'chart-card';
+
+    // (Deine Positionierung bleibt gleich)
+    const id = String(row.parkhaus_id ?? "");
+    const pos = CHART_POS[id];
+    if (pos) {
+      card.style.left = pos.left + "%";
+      card.style.top  = pos.top + "%";
     }
 
-    // Für jedes Parkhaus den aktuellsten Eintrag finden
-    const latestById = new Map();
-    raw.forEach(row => {
-      const id = row.parkhaus_id ?? row.parkhausId ?? row.id;
-      const timeVal = row.messzeit ?? row.time ?? null;
-      const time = timeVal ? new Date(timeVal).getTime() : 0;
+    const title = document.createElement('h2');
+    title.textContent = name;
 
-      if (!latestById.has(id) || time > latestById.get(id).time) {
-        latestById.set(id, { row, time });
+    const canvas = document.createElement('canvas');
+
+    const button = document.createElement('button');
+button.textContent = 'Details';
+button.className = 'details-btn';
+
+button.addEventListener('click', () => {
+  openOverlay(row, card);
+});
+
+card.appendChild(button);
+
+
+    // optional: sample-Info anzeigen
+    const small = document.createElement('div');
+    small.style.fontSize = "14px";
+    small.style.color = "#666";
+    small.textContent = row.samples ? `${row.samples} Messwerte` : "Keine Daten";
+
+    card.appendChild(title);
+    card.appendChild(canvas);
+    card.appendChild(small);
+    chartsContainer.appendChild(card);
+
+    new Chart(canvas, {
+      type: 'pie',
+      data: {
+        labels: ['Belegt', 'Frei'],
+        datasets: [{
+          data: [belegte, freie],
+          hoverOffset: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { position: 'top' } }
       }
     });
+  });
+}
 
-    // Charts für die neuesten Einträge erstellen
-    latestById.forEach(({ row }) => {
-      const freie = toInt(row.freie_plaetze ?? row.shortfree ?? 0);
-      const belegte = toInt(row.belegte_plaetze ?? row.shortoccupied ?? 0);
-      const name = row.parkhaus_name ?? `Parkhaus ${row.parkhaus_id ?? ''}`;
+async function loadAverage(day, hour) {
+  const url = `https://im3-projekt.lynnhartmann.ch/unload_avg.php?day=${encodeURIComponent(day)}&hour=${encodeURIComponent(hour)}`;
+  const res = await fetch(url);
+  const data = await res.json();
 
-      const card = document.createElement('div');
-      card.className = 'chart-card';
-
-      const title = document.createElement('h2');
-      title.textContent = name;
-
-      const canvas = document.createElement('canvas');
-
-      const button = document.createElement('button');
-      button.textContent = 'Details';
-      button.addEventListener('click', () => {
-        alert(`Details für ${name}`);
-      });
-
-      // Elemente in die Karte einfügen
-      card.appendChild(title);
-      card.appendChild(canvas);
-      card.appendChild(button);
-      chartsContainer.appendChild(card);
-
-      // Kreisdiagramm erstellen (Belegt / Frei)
-      new Chart(canvas, {
-        type: 'pie',
-        data: {
-          labels: ['Belegt', 'Frei'],
-          datasets: [{
-            data: [belegte, freie],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.9)', // rot = Belegt
-              'rgba(75, 192, 192, 0.9)'  // grün = Frei
-            ],
-            hoverOffset: 6
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            legend: { position: 'top' }
-          }
-        }
-      });
-    });
-
-  } catch (err) {
-    console.error('Fehler beim Laden der Daten:', err);
-    chartsContainer.textContent = 'Fehler beim Laden der Daten — siehe Konsole.';
+  if (data?.error) {
+    chartsContainer.textContent = data.error;
+    return;
   }
-});
+
+  renderCharts(data);
+}
+
 
 
 
@@ -270,5 +342,29 @@ document.addEventListener('DOMContentLoaded', () => {
       top: offsetTop,
       behavior: 'smooth'
     });
+  });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const scrollButton = document.querySelector('.belegung-anzeige-button');
+  const strassenbereich = document.querySelector('.strassenbereich');
+  const daySelect = document.querySelector('.select-wochentag');
+  const timeSelect = document.querySelector('.select-uhrzeit');
+
+  if (!scrollButton || !strassenbereich) return;
+
+  scrollButton.addEventListener('click', async () => {
+    const day = daySelect?.value;
+    const hour = timeSelect?.value;
+
+    if (!day || !hour) {
+      alert("Bitte Wochentag und Uhrzeit auswählen.");
+      return;
+    }
+
+    await loadAverage(day, hour);
+
+    const offsetTop = strassenbereich.getBoundingClientRect().top + window.pageYOffset;
+    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
   });
 });
