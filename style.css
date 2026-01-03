@@ -446,13 +446,297 @@ p {
   height: 100% !important;
 }
 
+/* =========================================
+   RESPONSIVE (am Ende von style.css einfügen)
+   Breakpoints: 1570 / 900 / 768 / 600
+========================================= */
 
+/* 1) Large Screens bis 1570px (leichte Anpassungen) */
+@media (max-width: 1570px) {
+  h1 { 
+    font-size: clamp(90px, 8vw, 160px);
+    margin-top: -280px;
+  }
 
+  .weisser-rahmen{
+    border-width: 20px;
+    padding: 300px 40px calc(var(--scene-h) + var(--scene-gap));
+    min-height: 820px;
+  }
 
+  .auswahl-button{ width: 220px; }
+  .belegung-anzeige-button{ max-width: 640px; }
 
+  .chart-card{
+    width: 360px;
+    height: 360px;
+  }
 
+  .chart-card canvas{
+    width: 220px !important;
+    height: 220px !important;
+  }
+}
 
+/* 2) Tablet / Zwischenzone 601px–900px (NEU, harmonisch) */
+@media (min-width: 601px) and (max-width: 900px) {
+  body{
+    font-size: 60px; /* Basis war 120px */
+    height: auto;    /* wichtig: sonst "klemmt" der Inhalt */
+  }
 
+  h1{
+    font-size: clamp(64px, 9vw, 110px);
+    margin-top: -180px;
+  }
+
+  .p-icon{
+    width: 0.9em;
+    height: 0.9em;
+    margin-right: -20px;
+  }
+
+  p{
+    font-size: 18px;
+    padding: 0 16px;
+  }
+
+  .weisser-rahmen{
+    width: 98vw;
+    border-width: 16px;
+    padding: 220px 24px calc(var(--scene-h) + 24px);
+    min-height: 720px;
+  }
+
+  .auswahl-buttons{
+    gap: 16px;
+  }
+
+  .auswahl-button{
+    width: min(360px, 80vw);
+    font-size: 18px;
+    padding: 12px 18px;
+  }
+
+  .belegung-anzeige-button{
+    width: min(520px, 86vw);
+    font-size: 18px;
+    padding: 14px 18px;
+  }
+
+  /* Deko kompakter */
+  :root{
+    --scene-h: clamp(120px, 30vw, 260px);
+    --scene-gap: 18px;
+  }
+
+  .deko-elemente{
+    width: 96%;
+  }
+
+  .deko-elemente .baum{ left: -10px; }
+  .deko-elemente .parkuhr{ right: -10px; }
+
+  /* Charts über der Straße kleiner */
+  .chart-card{
+    width: 280px;
+    height: 300px;
+    max-width: 46vw;
+    padding: 14px;
+  }
+
+  .chart-card h2{
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+
+  .chart-card canvas{
+    width: 180px !important;
+    height: 180px !important;
+  }
+
+  .chart-card button{
+    font-size: 0.85rem;
+    padding: 7px 12px;
+    left: 14px;
+    bottom: 12px;
+  }
+
+  /* Overlay */
+  .overlay{
+    width: min(640px, 94vw);
+    height: min(760px, 86vh);
+    border-width: 14px;
+    padding: 18px;
+  }
+
+  .overlay-title{
+    font-size: 26px;
+    top: 16px;
+    left: 16px;
+  }
+
+  .close-btn{
+    top: 12px;
+    right: 12px;
+  }
+
+  .map-wrap{ height: 260px; }
+  .overlay-chart-wrap{ height: 240px; }
+
+  /* Dropdowns etwas kompakter */
+  .uhrzeit-dropdown,
+  .wochentag-dropdown{
+    font-size: 18px;
+    border-width: 3px;
+  }
+  .uhrzeit-dropdown{ max-height: calc(7 * 42px); }
+  .uhrzeit-dropdown__item,
+  .wochentag-dropdown__item{
+    padding: 9px 14px;
+  }
+}
+
+/* 3) Tablet/Small <= 1024px (allgemein) */
+@media (max-width: 1024px) {
+  .road-stage{
+    width: 98vw;
+  }
+
+  .chart-card{
+    max-width: 52vw; /* etwas mehr Luft */
+  }
+}
+
+/* 4) Mobile <= 768px */
+@media (max-width: 768px) {
+  body{
+    font-size: 46px;
+    height: auto;
+  }
+
+  h1{
+    font-size: clamp(52px, 10vw, 86px);
+    margin-top: -120px;
+  }
+
+  .p-icon{
+    width: 0.85em;
+    height: 0.85em;
+    margin-right: -14px;
+  }
+
+  p{
+    font-size: 16px;
+    padding: 0 14px;
+  }
+
+  .weisser-rahmen{
+    border-width: 12px;
+    padding: 170px 16px calc(var(--scene-h) + 20px);
+    min-height: 650px;
+  }
+
+  .auswahl-buttons{
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .auswahl-button{
+    width: min(420px, 86vw);
+    font-size: 17px;
+    padding: 12px 16px;
+  }
+
+  .belegung-anzeige-button{
+    width: min(520px, 90vw);
+    font-size: 16px;
+    padding: 14px 16px;
+  }
+
+  :root{
+    --scene-h: clamp(110px, 32vw, 220px);
+    --scene-gap: 16px;
+  }
+
+  .deko-elemente{
+    width: 98%;
+  }
+
+  .deko-elemente .baum{ left: -6px; }
+  .deko-elemente .parkuhr{ right: -6px; }
+
+  .chart-card{
+    width: 240px;
+    height: 270px;
+    max-width: 70vw;
+    padding: 12px;
+  }
+
+  .chart-card canvas{
+    width: 160px !important;
+    height: 160px !important;
+  }
+
+  .chart-card h2{
+    font-size: 16px;
+  }
+
+  .overlay{
+    width: 94vw;
+    height: 86vh;
+    border-width: 12px;
+    padding: 16px;
+  }
+
+  .overlay-content{
+    padding: 70px 16px 16px;
+  }
+
+  .map-wrap{ height: 220px; }
+  .overlay-chart-wrap{ height: 220px; }
+}
+
+/* 5) Small Mobile <= 600px */
+@media (max-width: 600px) {
+  h1{
+    font-size: clamp(44px, 11vw, 72px);
+    margin-top: -100px;
+  }
+
+  .weisser-rahmen{
+    padding: 150px 14px calc(var(--scene-h) + 16px);
+  }
+
+  .auswahl-button{
+    width: 90vw;
+  }
+
+  .belegung-anzeige-button{
+    width: 92vw;
+  }
+
+  .chart-card{
+    width: 220px;
+    height: 250px;
+    max-width: 78vw;
+  }
+
+  .chart-card canvas{
+    width: 150px !important;
+    height: 150px !important;
+  }
+
+  .uhrzeit-dropdown,
+  .wochentag-dropdown{
+    font-size: 16px;
+  }
+
+  .overlay-title{
+    font-size: 22px;
+  }
+}
 
 
 

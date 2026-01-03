@@ -196,7 +196,7 @@ function renderCharts(rows) {
 
     const canvas = document.createElement('canvas');
 
-    const button = document.createElement('button');
+const button = document.createElement('button');
 button.textContent = 'Details';
 button.className = 'details-btn';
 
