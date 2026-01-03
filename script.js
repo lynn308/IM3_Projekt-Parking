@@ -32,15 +32,85 @@ const overlay = document.getElementById('overlay');
 const overlayTitle = overlay.querySelector('.overlay-title');
 const closeBtn = overlay.querySelector('.close-btn');
 const mapFrame = document.getElementById('mapFrame');
+const overlayDayCanvas = document.getElementById('overlayDayChart');
+let overlayDayChartInstance = null;
+
+let currentDay = null;
+
+
+
+
+
+
+
 
 closeBtn.addEventListener('click', () => {
   overlay.style.display = 'none';
   mapFrame.src = ''; // stoppt Google Maps
 });
+function renderOverlayDayChart(labels, values, dayLabel) {
+  if (!overlayDayCanvas) {
+    console.warn("Canvas #overlayDayChart nicht gefunden");
+    return;
+  }
 
-function openOverlay(row, anchorEl) {
+  if (overlayDayChartInstance) {
+    overlayDayChartInstance.destroy();
+    overlayDayChartInstance = null;
+  }
+
+  overlayDayChartInstance = new Chart(overlayDayCanvas, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Ø Belegung (%)',
+        data: values,
+        backgroundColor: '#0086EC',
+        borderRadius: 6,
+        borderWidth: 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top' },
+        title: {
+          display: true,
+          text: `Durchschnitt über den Tag (${dayLabel})`
+        }
+      },
+      scales: {
+        y: { beginAtZero: true, max: 100 }
+      }
+    }
+  });
+}
+
+function hourLabels24() {
+  return Array.from({ length: 24 }, (_, h) =>
+    String(h).padStart(2, '0') + ':00'
+  );
+}
+
+
+// Übergangslösung: 24x dein bestehendes Endpoint aufrufen
+// (funktioniert sofort, aber etwas langsamer)
+async function loadOverlayDayAverage(parkhausId, day) {
+  const url = `https://im3-projekt.lynnhartmann.ch/unload_day_avg.php?parkhaus_id=${encodeURIComponent(parkhausId)}&day=${encodeURIComponent(day)}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  if (data?.error) throw new Error(data.error);
+  return data.values;
+}
+
+
+
+async function openOverlay(row, anchorEl) {
   overlayTitle.textContent = row.parkhaus_name ?? 'Details';
 
+  
   const lat = row.lat;
   const lon = row.lon;
 
@@ -52,8 +122,33 @@ function openOverlay(row, anchorEl) {
     mapFrame.src = '';
   }
 
-  overlay.style.display = 'block';
+   overlay.style.display = 'block';
   overlay.style.opacity = '1';
+
+  const dayLabel = currentDay || '—';
+const labels = hourLabels24();
+
+// Erstmal "leer" anzeigen (optional)
+renderOverlayDayChart(labels, new Array(24).fill(0), dayLabel);
+
+try {
+  const values = await loadOverlayDayAverage(row.parkhaus_id, dayLabel);
+
+  console.log("Overlay Chart Debug:", {
+    dayLabel,
+    parkhaus_id: row.parkhaus_id,
+    values,
+    len: Array.isArray(values) ? values.length : null
+  });
+
+  renderOverlayDayChart(labels, values, dayLabel);
+} catch (e) {
+  console.warn("Fehler beim Laden der Tageswerte:", e);
+}
+
+
+
+
 
   const r = anchorEl.getBoundingClientRect();
   const oh = overlay.offsetHeight;
@@ -367,9 +462,12 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    currentDay = day;
+
     await loadAverage(day, hour);
 
     const offsetTop = strassenbereich.getBoundingClientRect().top + window.pageYOffset;
     window.scrollTo({ top: offsetTop, behavior: 'smooth' });
   });
 });
+
