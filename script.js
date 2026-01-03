@@ -28,14 +28,45 @@ const CHART_POS = {
   "P54": { left: 40, top: 88.5 },
 };
 
+const CHART_POS_MOBILE = {
+  "P21": { left: 80, top: 5},
+  "P22": { left: 20, top: 10 },
+  "P23": { left: 25, top: 18 },
+  "P24": { left: 60, top: 18 },
+
+  "P25": { left: 35, top: 28.5 },
+  "P31": { left: 66, top: 28.5},
+
+  "P32": { left: 58, top: 38.5 },
+
+  "P33": { left: 70, top: 48.5 },
+  "P41": { left: 34, top: 48.5},
+
+  "P42": { left: 60, top: 58.5 },
+
+  "P43": { left: 32, top: 58.5 },
+  "P44": { left: 40, top: 68.5 },
+
+  "P51": { left: 60, top: 78.5 },
+
+  "P52": { left: 32, top: 78.5 },
+  "P53": { left: 66, top: 88.5 },
+  "P54": { left: 40, top: 88.5 },
+};
+
+
 const overlay = document.getElementById('overlay');
 const overlayTitle = overlay.querySelector('.overlay-title');
 const closeBtn = overlay.querySelector('.close-btn');
 const mapFrame = document.getElementById('mapFrame');
 const overlayDayCanvas = document.getElementById('overlayDayChart');
+const overlayPieCanvas = document.getElementById('overlayPieChart');
+let overlayPieChartInstance = null;
+
 let overlayDayChartInstance = null;
 
 let currentDay = null;
+let currentHour = null;
 
 
 
@@ -94,6 +125,39 @@ function hourLabels24() {
   );
 }
 
+function renderOverlayPieChart(belegte, freie, titleText) {
+  if (!overlayPieCanvas) {
+    console.warn("Canvas #overlayPieChart nicht gefunden");
+    return;
+  }
+
+  if (overlayPieChartInstance) {
+    overlayPieChartInstance.destroy();
+    overlayPieChartInstance = null;
+  }
+
+  overlayPieChartInstance = new Chart(overlayPieCanvas, {
+    type: 'pie',
+    data: {
+      labels: ['Belegt', 'Frei'],
+      datasets: [{
+        data: [belegte, freie],
+        backgroundColor: ['#FF6384', '#37ad27ff'],
+        hoverOffset: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top' },
+        title: { display: true, text: titleText }
+      }
+    }
+  });
+}
+
+
 
 // Übergangslösung: 24x dein bestehendes Endpoint aufrufen
 // (funktioniert sofort, aber etwas langsamer)
@@ -123,6 +187,16 @@ async function openOverlay(row, anchorEl) {
   }
 
    overlay.style.display = 'block';
+   const freie = toInt(row.freie_plaetze ?? 0);
+const belegte = toInt(row.belegte_plaetze ?? 0);
+const titleText =
+  currentDay && currentHour
+    ? `Durchschnittliche Belegung – ${currentDay}, ${currentHour}`
+    : 'Durchschnittliche Belegung';
+
+renderOverlayPieChart(belegte, freie, titleText);
+
+
   overlay.style.opacity = '1';
 
   const dayLabel = currentDay || '—';
@@ -175,6 +249,10 @@ const toInt = v => { const n = parseInt(v, 10); return Number.isFinite(n) ? n : 
 function renderCharts(rows) {
   chartsContainer.innerHTML = ""; // alte Charts entfernen
 
+  const isMobile = window.matchMedia("(max-width: 480px)").matches;
+  const POS = isMobile ? CHART_POS_MOBILE : CHART_POS;
+
+
   rows.forEach(row => {
     const freie = toInt(row.freie_plaetze ?? 0);
     const belegte = toInt(row.belegte_plaetze ?? 0);
@@ -185,7 +263,7 @@ function renderCharts(rows) {
 
     // (Deine Positionierung bleibt gleich)
     const id = String(row.parkhaus_id ?? "");
-    const pos = CHART_POS[id];
+    const pos = POS[id];
     if (pos) {
       card.style.left = pos.left + "%";
       card.style.top  = pos.top + "%";
@@ -194,52 +272,75 @@ function renderCharts(rows) {
     const title = document.createElement('h2');
     title.textContent = name;
 
+    const subtitle = document.createElement('div');
+subtitle.className = 'chart-subtitle';
+subtitle.textContent =
+  currentDay && currentHour
+    ? `Durchschnittliche Belegung – ${currentDay}, ${currentHour}`
+    : 'Durchschnittliche Belegung';
+
     const canvas = document.createElement('canvas');
 
-const button = document.createElement('button');
-button.textContent = 'Details';
-button.className = 'details-btn';
 
-button.addEventListener('click', () => {
-  openOverlay(row, card);
-});
+// Button
+const button = document.createElement('button');
+button.className = 'details-btn';
+button.addEventListener('click', () => openOverlay(row, card));
+
+if (isMobile) {
+  card.classList.add('pin-mode');
+
+  const nameUpper = (row.parkhaus_name ?? "").toUpperCase();
+  button.dataset.label = `INFOS ${nameUpper}`;
+  button.textContent = "";
+} else {
+  card.classList.remove('pin-mode');
+  button.removeAttribute('data-label');
+  button.textContent = "Details";
+}
 
 card.appendChild(button);
 
+// sample Info
+const small = document.createElement('div');
+small.style.fontSize = "14px";
+small.style.color = "#666";
+small.textContent = row.samples ? `${row.samples} Messwerte` : "Keine Daten";
 
-    // optional: sample-Info anzeigen
-    const small = document.createElement('div');
-    small.style.fontSize = "14px";
-    small.style.color = "#666";
-    small.textContent = row.samples ? `${row.samples} Messwerte` : "Keine Daten";
+// ✅ NUR Desktop/Tablet: Titel + Chart + Small
+if (!isMobile) {
+  card.appendChild(title);
+  card.appendChild(subtitle);   // 👈 NEU
+  card.appendChild(canvas);
+  card.appendChild(small);
+}
 
-    card.appendChild(title);
-    card.appendChild(canvas);
-    card.appendChild(small);
-    chartsContainer.appendChild(card);
+chartsContainer.appendChild(card);
 
-    new Chart(canvas, {
-      type: 'pie',
-      data: {
-        labels: ['Belegt', 'Frei'],
-        datasets: [{
-          data: [belegte, freie],
-          backgroundColor: ['#FF6384', '#37ad27ff'],
-          hoverOffset: 6
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: { 
-          legend: { position: 'top' ,
-            labels: {
-              font: { 
-                size: 20
-              }
-            }
-           } }
+// ✅ NUR Desktop/Tablet: Chart zeichnen
+if (!isMobile) {
+  
+  new Chart(canvas, {
+    type: 'pie',
+    data: {
+      labels: ['Belegt', 'Frei'],
+      datasets: [{
+        data: [belegte, freie],
+        backgroundColor: ['#FF6384', '#37ad27ff'],
+        hoverOffset: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: { font: { size: 20 } }
+        }
       }
-    });
+    }
+  });
+}
   });
 }
 
@@ -253,6 +354,7 @@ async function loadAverage(day, hour) {
     return;
   }
 
+  lastRows = data;
   renderCharts(data);
 }
 
@@ -463,6 +565,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     currentDay = day;
+    currentHour = hour;
 
     await loadAverage(day, hour);
 
@@ -470,4 +573,20 @@ document.addEventListener('DOMContentLoaded', () => {
     window.scrollTo({ top: offsetTop, behavior: 'smooth' });
   });
 });
+
+let lastRows = null;
+
+// In loadAverage(), direkt bevor renderCharts(data) aufgerufen wird:
+/// lastRows = data;   (siehe unten)
+
+// Beim Resize neu rendern (wenn es schon Daten gibt)
+let resizeTimer = null;
+window.addEventListener('resize', () => {
+  if (!lastRows) return;
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    renderCharts(lastRows);
+  }, 150);
+});
+
 

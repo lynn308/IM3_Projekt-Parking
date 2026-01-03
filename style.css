@@ -446,6 +446,30 @@ p {
   height: 100% !important;
 }
 
+.overlay-pie-wrap{
+  margin-top: 16px;
+  width: 100%;
+  height: 240px;            /* wichtig! */
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+#overlayPieChart{
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.chart-subtitle{
+  font-size: 14px;
+  color: #666;
+  margin: -6px 0 10px;
+  text-align: center;
+}
+
+
+
 /* =========================================
    RESPONSIVE (am Ende von style.css einfügen)
    Breakpoints: 1570 / 900 / 768 / 600
@@ -738,7 +762,223 @@ p {
   }
 }
 
+/* =========================
+   MOBILE DEKO – KOMPAKT & SCHÖN (OVERRIDES)
+   ========================= */
+@media (max-width: 768px){
+
+  /* Container: nicht mehr absolute Bühne, sondern kompakt zentriert */
+  .deko-elemente{
+    position: relative !important;
+    left: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+
+    width: fit-content !important;
+    max-width: 100%;
+    margin: 0 auto;
+
+    display: flex !important;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0 !important;           /* kein Grid-gap */
+    padding: 0 8px !important;   /* wenig Außenluft */
+    box-sizing: border-box;
+    margin-top: 40px;
+  }
+
+  /* Absolute Positionierung der 3 SVGs wirklich ausschalten */
+  .deko-elemente .baum,
+  .deko-elemente .bank,
+  .deko-elemente .parkuhr{
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+  }
+
+  /* Größen */
+  .deko-elemente .bank{
+    height: 150px !important;     /* Bank kleiner */
+    width: auto !important;
+    transform: scale(0.78);
+    transform-origin: bottom center;
+    z-index: 2;                   /* Bank vorne */
+  }
+
+  .deko-elemente .baum{
+    height: 125px !important;
+    width: auto !important;
+    margin-right: -26px;          /* näher zur Bank (und leicht dahinter) */
+    z-index: 1;
+  }
+
+  .deko-elemente .parkuhr{
+    height: 135px !important;
+    width: auto !important;
+    margin-left: -18px;           /* näher zur Bank */
+    z-index: 1;
+  }
+}
+
+/* Extra klein: noch kompakter */
+@media (max-width: 480px){
+  .deko-elemente{ padding: 0 6px !important;
+    margin-bottom: -140px;
+  }
+
+  .deko-elemente .bank{
+    height: 135px !important;
+    transform: scale(0.75);
+  }
+
+  .deko-elemente .baum{
+    height: 115px !important;
+    margin-right: -30px;
+  }
+
+  .deko-elemente .parkuhr{
+    height: 125px !important;
+    margin-left: -22px;
+  }
+}
+
+/* =========================
+   MOBILE – BUTTONS SCHMALER & MIT RAND
+   ========================= */
+@media (max-width: 768px) {
+
+  /* Container leicht einrücken */
+  .rahmen-inhalt{
+    width: 100%;
+    padding: 0 16px;   /* Abstand zum weißen Rahmen */
+    box-sizing: border-box;
+  }
+
+  /* Wochentag & Uhrzeit */
+  .auswahl-button{
+    width: 100%;              /* Basis */
+    max-width: 340px;         /* 🔥 macht sie schmal */
+    margin: 0 auto;           /* zentriert */
+  }
+
+  /* Hauptbutton */
+  .belegung-anzeige-button{
+    width: 100%;
+    max-width: 360px;         /* 🔥 ebenfalls schmaler */
+    margin: 0 auto;
+  }
+}
+
+/* Extra klein (z.B. iPhone SE) */
+@media (max-width: 480px) {
+
+  .auswahl-button{
+    max-width: 300px;
+  }
+
+  .belegung-anzeige-button{
+    max-width: 320px;
+  }
+}
+
+/* =========================
+   MOBILE: Strasse + Pins wie Mock
+   ========================= */
+@media (max-width: 480px){
+  .strassenbereich{
+    width: 100vw;
+    margin: 0 auto;
+  }
+
+  .road-stage{
+    width: 92vw;          /* nicht am Rand kleben */
+    max-width: 420px;     /* wie iPhone Breite */
+    margin: 0 auto;
+  }
+
+  /* Cards als "unsichtbarer" Anker */
+  .chart-card.pin-mode{
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: auto !important;
+    height: auto !important;
+  }
+
+  .chart-card.pin-mode h2,
+  .chart-card.pin-mode canvas,
+  .chart-card.pin-mode div{
+    display: none !important;
+  }
+
+  /* Pin-Button */
+  .chart-card.pin-mode .details-btn{
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    background: #0086EC;
+    position: relative;
+    padding: 0;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.20);
+  }
+
+  /* P im Kreis */
+  .chart-card.pin-mode .details-btn::before{
+    content: "P";
+    position: absolute;
+    inset: 0;
+    display: grid;
+
+  }
+
+}
+
+/* Overlay Pie standardmäßig aus */
+.overlay-pie-wrap{
+  display: none;
+}
+
+/* Nur Mobile zeigt das Pie im Overlay */
+@media (max-width: 480px){
+  .overlay-pie-wrap{
+    display: block;
+  }
+}
+
+/* =========================
+   MOBILE OVERLAY: SCROLLBAR
+   ========================= */
+@media (max-width: 480px){
+
+  /* Overlay selbst: nicht zu hoch, damit es in den Screen passt */
+  .overlay{
+    height: 88vh;              /* passt in den Screen */
+    max-height: 88vh;
+    overflow: hidden;          /* Scroll nur innen */
+  }
+
+  /* Inhalt scrollt */
+  .overlay-content{
+    height: 100%;
+    overflow-y: auto;          /* ✅ scrollen */
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 18px;      /* etwas Luft unten */
+  }
+
+  /* Map/Charts: kompakter, damit weniger “gequetscht” */
+  .map-wrap{ height: 220px; }
+  .overlay-pie-wrap{ height: 210px; }      /* falls du das Pie auf Mobile zeigst */
+  .overlay-chart-wrap{ height: 240px; }
+
+  /* optional: Scrollbar optisch weniger “hart” */
+  .overlay-content::-webkit-scrollbar{
+    width: 8px;
+  }
+}
 
 
-
-
+.chart-card{
+  z-index: 10;
+}
