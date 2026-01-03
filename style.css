@@ -468,14 +468,6 @@ p {
   text-align: center;
 }
 
-
-
-/* =========================================
-   RESPONSIVE (am Ende von style.css einfügen)
-   Breakpoints: 1570 / 900 / 768 / 600
-========================================= */
-
-/* 1) Large Screens bis 1570px (leichte Anpassungen) */
 @media (max-width: 1570px) {
   h1 { 
     font-size: clamp(90px, 8vw, 160px);
@@ -548,7 +540,6 @@ p {
     padding: 14px 18px;
   }
 
-  /* Deko kompakter */
   :root{
     --scene-h: clamp(120px, 30vw, 260px);
     --scene-gap: 18px;
@@ -561,7 +552,6 @@ p {
   .deko-elemente .baum{ left: -10px; }
   .deko-elemente .parkuhr{ right: -10px; }
 
-  /* Charts über der Straße kleiner */
   .chart-card{
     width: 280px;
     height: 300px;
@@ -762,9 +752,6 @@ p {
   }
 }
 
-/* =========================
-   MOBILE DEKO – KOMPAKT & SCHÖN (OVERRIDES)
-   ========================= */
 @media (max-width: 768px){
 
   /* Container: nicht mehr absolute Bühne, sondern kompakt zentriert */
@@ -787,7 +774,6 @@ p {
     margin-top: 40px;
   }
 
-  /* Absolute Positionierung der 3 SVGs wirklich ausschalten */
   .deko-elemente .baum,
   .deko-elemente .bank,
   .deko-elemente .parkuhr{
@@ -843,9 +829,6 @@ p {
   }
 }
 
-/* =========================
-   MOBILE – BUTTONS SCHMALER & MIT RAND
-   ========================= */
 @media (max-width: 768px) {
 
   /* Container leicht einrücken */
@@ -882,9 +865,6 @@ p {
   }
 }
 
-/* =========================
-   MOBILE: Strasse + Pins wie Mock
-   ========================= */
 @media (max-width: 480px){
   .strassenbereich{
     width: 100vw;
@@ -947,9 +927,6 @@ p {
   }
 }
 
-/* =========================
-   MOBILE OVERLAY: SCROLLBAR
-   ========================= */
 @media (max-width: 480px){
 
   /* Overlay selbst: nicht zu hoch, damit es in den Screen passt */
@@ -981,4 +958,183 @@ p {
 
 .chart-card{
   z-index: 10;
+}
+
+@media (max-width: 480px){
+
+  .chart-card.pin-mode .details-btn{
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    padding: 0;
+
+    background: #0086EC;
+    border: 4px solid #fff;
+
+    position: relative;     /* 🔑 wichtig */
+    color: transparent;     /* echten Text ausblenden */
+  }
+
+  /* Das "P" */
+  .chart-card.pin-mode .details-btn::before{
+    content: "P";
+
+    position: absolute;     /* 🔑 echte Zentrierung */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    font-size: 24px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .chart-card.pin-mode .details-btn::after{
+    content: none;
+  }
+}
+
+@media (max-width: 480px){
+
+  .chart-card.pin-mode{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translate(-50%, -50%);
+  }
+
+  .chart-card.pin-mode::after{
+    content: attr(data-name);
+    margin-top: 8px;
+
+    font-size: 10px;          /* ⬅️ größer */
+    font-weight: 700;
+    line-height: 1.2;
+
+    color: #003a6b;
+    background: #ffffff;
+
+    padding: 4px 8px;         /* ⬅️ mehr Fläche */
+    border-radius: 8px;
+
+    white-space: nowrap;
+    pointer-events: none;
+
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* ⬅️ Kontrast */
+  }
+}
+
+@media (max-width: 480px){
+
+  .chart-card.pin-mode{
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* Der Pin-Button */
+  .chart-card.pin-mode .details-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .chart-card.pin-mode .pin-letter{
+    display: inline-block;
+    transform: translate(0px, 2px); /* ⬅️ X,Y anpassen */
+  }
+
+  /* Label darunter */
+  .chart-card.pin-mode .pin-label{
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #003a6b;
+
+    background: #fff;
+    padding: 4px 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  /* wichtig: altes ::after Label deaktivieren, falls noch drin */
+  .chart-card.pin-mode::after{
+    content: none !important;
+  }
+}
+
+@media (max-width: 480px){
+  .chart-card.pin-mode .pin-label{
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+@media (max-width: 480px){
+
+  .chart-card.pin-mode{
+    display: flex;
+    flex-direction: column;
+    align-items: center;   /* Pin + Label gleiche Mittelachse */
+    gap: 8px;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .chart-card.pin-mode .details-btn{
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto;        /* 🔑 Kreis wirklich mittig */
+    position: static !important;
+
+    background: #0086EC;
+    border: 4px solid #fff;
+    color: #fff;
+
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  /* ✅ NUR das P verschieben (nicht den Kreis) */
+  .chart-card.pin-mode .pin-letter{
+    display: inline-block;
+    transform: translate(0px, 2px); /* <-- hier feinjustieren */
+  }
+
+  .chart-card.pin-mode .pin-label{
+    display: inline-block;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.2;
+    padding: 4px 10px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    white-space: nowrap;
+  }
+
+  /* falls vorher pseudo-P genutzt wurde */
+  .chart-card.pin-mode .details-btn::before,
+  .chart-card.pin-mode .details-btn::after{
+    content: none !important;
+  }
 }

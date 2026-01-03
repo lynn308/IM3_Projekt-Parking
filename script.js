@@ -292,14 +292,22 @@ if (isMobile) {
 
   const nameUpper = (row.parkhaus_name ?? "").toUpperCase();
   button.dataset.label = `INFOS ${nameUpper}`;
-  button.textContent = "";
+  button.innerHTML = '<span class="pin-letter">P</span>';
+
+
+  // ✅ echtes Label unter dem Pin
+  const label = document.createElement('div');
+  label.className = 'pin-label';
+  label.textContent = row.parkhaus_name ?? '';
+
+  card.appendChild(button);
+  card.appendChild(label);
 } else {
   card.classList.remove('pin-mode');
   button.removeAttribute('data-label');
   button.textContent = "Details";
+  card.appendChild(button);
 }
-
-card.appendChild(button);
 
 // sample Info
 const small = document.createElement('div');
