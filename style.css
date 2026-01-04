@@ -468,6 +468,87 @@ p {
   text-align: center;
 }
 
+/* Platzhalter statt Diagramm */
+.chart-placeholder{
+  width: 100%;
+  flex: 1;                      /* nimmt den freien Platz in der Card */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;       /* ✅ mittig */
+  padding: 10px 16px 60px;       /* ✅ unten Platz für Button + "Messwerte" */
+  box-sizing: border-box;
+}
+
+.no-data-text{
+  font-size: 18px;
+  font-weight: 800;
+  color: #444;
+  text-align: center;
+}
+
+.no-data-sub{
+  margin-top: 6px;
+  font-size: 13px;
+  color: #777;
+  text-align: center;
+  line-height: 1.35;
+  max-width: 260px;
+}
+
+.overlay-nodata{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.overlay-nodata-title{
+  font-size: 18px;
+  font-weight: 800;
+  color: #333;
+}
+
+.overlay-nodata-sub{
+  margin-top: 6px;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.35;
+  max-width: 320px;
+}
+
+.overlay-nodata{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.overlay-nodata-title{
+  font-size: 18px;
+  font-weight: 800;
+  color: #333;
+}
+
+.overlay-nodata-sub{
+  margin-top: 6px;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.35;
+  max-width: 320px;
+}
+
+
 @media (max-width: 1570px) {
   h1 { 
     font-size: clamp(90px, 8vw, 160px);
@@ -921,7 +1002,7 @@ p {
 }
 
 /* Nur Mobile zeigt das Pie im Overlay */
-@media (max-width: 480px){
+@media (max-width: 1024px){
   .overlay-pie-wrap{
     display: block;
   }
@@ -1136,5 +1217,253 @@ p {
   .chart-card.pin-mode .details-btn::before,
   .chart-card.pin-mode .details-btn::after{
     content: none !important;
+  }
+}
+
+@media (max-width: 1300px){
+
+  .chart-card.pin-mode{
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: auto !important;
+    height: auto !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  /* Button darf NICHT absolute sein im Pin-Mode */
+  .chart-card.pin-mode .details-btn{
+    position: static !important;
+    left: auto !important;
+    bottom: auto !important;
+
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #0086EC;
+    border: 4px solid #fff;
+
+   font-size: 28px;
+    font-weight: 800;
+    line-height: 1;
+    color: #fff;
+  }
+
+  .chart-card.pin-mode .pin-letter{
+    display: inline-block;
+    transform: translate(0px, 2px);
+  }
+
+  .chart-card.pin-mode .pin-label{
+    display: inline-block !important;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #003a6b;
+
+    background: #fff;
+    padding: 4px 10px;
+    border-radius: 10px;
+
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+}
+
+/* PINS – TABLET (≤1024px) */
+@media (max-width: 1024px){
+  .chart-card.pin-mode .details-btn{
+    width: 62px;
+    height: 62px;
+    font-size: 26px;
+  }
+  .chart-card.pin-mode .pin-letter{
+    font-size: 26px;
+    transform: translate(0px, 3px);
+  }
+  .chart-card.pin-mode .pin-label{
+    font-size: 15px;
+    padding: 6px 14px;
+  }
+}
+
+
+/* =========================
+   TABLET: Charts kleiner
+   ========================= */
+@media (max-width: 1024px){
+
+  .chart-card:not(.pin-mode){
+    width: 260px;
+    height: 280px;
+    padding: 12px;
+  }
+
+  .chart-card h2{
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+
+  .chart-subtitle{
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .chart-card:not(.pin-mode) canvas{
+    width: 160px !important;
+    height: 160px !important;
+  }
+
+  .chart-card:not(.pin-mode) button{
+    font-size: 0.75rem;
+    padding: 5px 10px;
+    bottom: 10px;
+    left: 10px;
+  }
+}
+
+/* =========================
+   TABLET: Overlay anpassen
+   ========================= */
+/* Tablet soll das gleiche Overlay-Verhalten wie Mobile haben */
+@media (max-width: 1024px){
+
+  .overlay{
+    width: 94vw;              /* wie Mobile: flexibel */
+    height: 88vh;
+    max-height: 88vh;
+    overflow: hidden;
+  }
+
+  .overlay-content{
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 18px;
+  }
+
+  .map-wrap{ height: 220px; }
+  .overlay-pie-wrap{ height: 210px; }      /* falls Pie angezeigt wird */
+  .overlay-chart-wrap{ height: 240px; }
+}
+
+/* =========================
+   SMALL DESKTOP (1025–1300px)
+   Card-Charts kleiner
+   ========================= */
+/* SMALL DESKTOP 1025–1300: Card-Charts deutlich kleiner */
+@media (min-width: 1025px) and (max-width: 1400px){
+
+  .chart-card{
+    width: 250px !important;
+    height: 260px !important;
+    padding: 10px !important;
+    border-radius: 12px;
+  }
+
+  .chart-card h2{
+    font-size: 16px !important;
+    margin: 4px 0 2px !important;
+  }
+
+  .chart-subtitle{
+    font-size: 11px !important;
+    margin: 0 0 6px !important;
+  }
+
+  .chart-card canvas{
+    width: 150px !important;
+    height: 150px !important;
+  }
+
+  .chart-card button{
+    font-size: 0.72rem !important;
+    padding: 5px 10px !important;
+    left: 10px !important;
+    bottom: 10px !important;
+  }
+}
+
+/* PINS – MOBILE (≤768px) */
+@media (max-width: 768px){
+  .chart-card.pin-mode .details-btn{
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+  }
+  .chart-card.pin-mode .pin-letter{
+    font-size: 24px;
+    transform: translate(0px, 2px);
+  }
+  .chart-card.pin-mode .pin-label{
+    font-size: 14px;
+    padding: 4px 10px;
+  }
+}
+
+
+/* =========================
+   PIN SIZE STUFEN (GANZ UNTEN)
+   ========================= */
+
+/* 1) Pins gross (bis 1300px) */
+@media (min-width: 769px) and (max-width: 1300px){
+  .chart-card.pin-mode .details-btn{
+    width: 72px !important;
+    height: 72px !important;
+    font-size: 30px !important;
+  }
+  .chart-card.pin-mode .pin-letter{
+    font-size: 30px !important;
+    transform: translate(0px, 3px) !important;
+  }
+  .chart-card.pin-mode .pin-label{
+    font-size: 16px !important;
+    padding: 6px 14px !important;
+  }
+}
+
+/* 2) Pins mittel (bis 1024px) */
+@media (max-width: 1024px){
+  .chart-card.pin-mode .details-btn{
+    width: 66px !important;
+    height: 66px !important;
+    font-size: 28px !important;
+  }
+  .chart-card.pin-mode .pin-letter{
+    font-size: 28px !important;
+    transform: translate(0px, 3px) !important;
+  }
+  .chart-card.pin-mode .pin-label{
+    font-size: 15px !important;
+    padding: 6px 14px !important;
+  }
+}
+
+/* 3) Pins klein (bis 768px) */
+@media (max-width: 768px){
+  .chart-card.pin-mode .details-btn{
+    width: 56px !important;
+    height: 56px !important;
+    font-size: 24px !important;
+  }
+  .chart-card.pin-mode .pin-letter{
+    font-size: 24px !important;
+    transform: translate(0px, 2px) !important;
+  }
+  .chart-card.pin-mode .pin-label{
+    font-size: 14px !important;
+    padding: 4px 10px !important;
   }
 }

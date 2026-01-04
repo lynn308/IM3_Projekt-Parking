@@ -1,20 +1,22 @@
 console.log("Script gestartet");
 
+
+
 const CHART_POS = {
   // Beispiel: parkhaus_id -> { left, top } in Prozent
   // Diese Werte musst du 1x feinjustieren, dann passt es immer.
   "P21": { left: 80, top: 5},
   "P22": { left: 20, top: 10 },
-  "P23": { left: 25, top: 18 },
-  "P24": { left: 60, top: 18 },
+  "P23": { left: 25, top: 18.5 },
+  "P24": { left: 60, top: 18.5 },
 
-  "P25": { left: 35, top: 28.5 },
-  "P31": { left: 66, top: 28.5},
+  "P25": { left: 45, top: 28.5 },
+  "P31": { left: 75, top: 28.5},
 
   "P32": { left: 58, top: 38.5 },
 
   "P33": { left: 70, top: 48.5 },
-  "P41": { left: 34, top: 48.5},
+  "P41": { left: 40, top: 48.5},
 
   "P42": { left: 60, top: 58.5 },
 
@@ -24,8 +26,8 @@ const CHART_POS = {
   "P51": { left: 60, top: 78.5 },
 
   "P52": { left: 32, top: 78.5 },
-  "P53": { left: 66, top: 88.5 },
-  "P54": { left: 40, top: 88.5 },
+  "P53": { left: 75, top: 89 },
+  "P54": { left: 40, top: 89 },
 };
 
 const CHART_POS_MOBILE = {
@@ -34,13 +36,13 @@ const CHART_POS_MOBILE = {
   "P23": { left: 25, top: 18 },
   "P24": { left: 60, top: 18 },
 
-  "P25": { left: 35, top: 28.5 },
-  "P31": { left: 66, top: 28.5},
+  "P25": { left: 41, top: 28.5 },
+  "P31": { left: 69, top: 28.5},
 
   "P32": { left: 58, top: 38.5 },
 
   "P33": { left: 70, top: 48.5 },
-  "P41": { left: 34, top: 48.5},
+  "P41": { left: 37, top: 48.5},
 
   "P42": { left: 60, top: 58.5 },
 
@@ -50,7 +52,7 @@ const CHART_POS_MOBILE = {
   "P51": { left: 60, top: 78.5 },
 
   "P52": { left: 32, top: 78.5 },
-  "P53": { left: 66, top: 88.5 },
+  "P53": { left: 78, top: 88.5 },
   "P54": { left: 40, top: 88.5 },
 };
 
@@ -61,6 +63,8 @@ const closeBtn = overlay.querySelector('.close-btn');
 const mapFrame = document.getElementById('mapFrame');
 const overlayDayCanvas = document.getElementById('overlayDayChart');
 const overlayPieCanvas = document.getElementById('overlayPieChart');
+const overlayPieNoData = document.getElementById('overlayPieNoData');
+
 let overlayPieChartInstance = null;
 
 let overlayDayChartInstance = null;
@@ -194,7 +198,21 @@ const titleText =
     ? `Durchschnittliche Belegung – ${currentDay}, ${currentHour}`
     : 'Durchschnittliche Belegung';
 
-renderOverlayPieChart(belegte, freie, titleText);
+const hasPieData = (belegte + freie) > 0;
+
+if (hasPieData) {
+  overlayPieCanvas.style.display = 'block';
+  if (overlayPieNoData) overlayPieNoData.style.display = 'none';
+  renderOverlayPieChart(belegte, freie, titleText);
+} else {
+  if (overlayPieChartInstance) {
+    overlayPieChartInstance.destroy();
+    overlayPieChartInstance = null;
+  }
+  overlayPieCanvas.style.display = 'none';
+  if (overlayPieNoData) overlayPieNoData.style.display = 'flex';
+}
+
 
 
   overlay.style.opacity = '1';
@@ -249,7 +267,7 @@ const toInt = v => { const n = parseInt(v, 10); return Number.isFinite(n) ? n : 
 function renderCharts(rows) {
   chartsContainer.innerHTML = ""; // alte Charts entfernen
 
-  const isMobile = window.matchMedia("(max-width: 480px)").matches;
+  const isMobile = window.matchMedia("(max-width: 1024px)").matches;
   const POS = isMobile ? CHART_POS_MOBILE : CHART_POS;
 
 
@@ -310,45 +328,66 @@ if (isMobile) {
 }
 
 // sample Info
+// sample Info
 const small = document.createElement('div');
 small.style.fontSize = "14px";
 small.style.color = "#666";
 small.textContent = row.samples ? `${row.samples} Messwerte` : "Keine Daten";
 
-// ✅ NUR Desktop/Tablet: Titel + Chart + Small
+// ✅ NUR Desktop / Tablet
 if (!isMobile) {
+
+  const hasData = (belegte + freie) > 0;
+
   card.appendChild(title);
-  card.appendChild(subtitle);   // 👈 NEU
-  card.appendChild(canvas);
-  card.appendChild(small);
-}
+  card.appendChild(subtitle);
 
-chartsContainer.appendChild(card);
+  if (hasData) {
+    // ✅ Diagramm anzeigen
+    card.appendChild(canvas);
 
-// ✅ NUR Desktop/Tablet: Chart zeichnen
-if (!isMobile) {
-  
-  new Chart(canvas, {
-    type: 'pie',
-    data: {
-      labels: ['Belegt', 'Frei'],
-      datasets: [{
-        data: [belegte, freie],
-        backgroundColor: ['#FF6384', '#37ad27ff'],
-        hoverOffset: 6
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: 'top',
-          labels: { font: { size: 20 } }
+    new Chart(canvas, {
+      type: 'pie',
+      data: {
+        labels: ['Belegt', 'Frei'],
+        datasets: [{
+          data: [belegte, freie],
+          backgroundColor: ['#FF6384', '#37ad27ff'],
+          hoverOffset: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: { font: { size: 20 } }
+          }
         }
       }
-    }
-  });
+    });
+
+  } else {
+    // ❌ KEINE DATEN → Text anzeigen
+    const placeholder = document.createElement('div');
+    placeholder.className = 'chart-placeholder';
+
+    const msg = document.createElement('div');
+    msg.className = 'no-data-text';
+    msg.textContent = 'Keine Daten vorhanden';
+
+    const sub = document.createElement('div');
+    sub.className = 'no-data-sub';
+    sub.textContent = 'Für dieses Parkhaus liegen aktuell keine Messwerte vor.';
+
+    placeholder.appendChild(msg);
+    placeholder.appendChild(sub);
+    card.appendChild(placeholder);
+  }
+
+  card.appendChild(small);
 }
+    chartsContainer.appendChild(card);
   });
 }
 
