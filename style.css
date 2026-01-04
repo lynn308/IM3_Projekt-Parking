@@ -35,12 +35,6 @@ p {
   line-height: normal;
 }
 
-
-
-
-
-
-/*Inhalt vom weissen Rahmen*/
 :root {
   --scene-h: clamp(150px, 28vw, 420px);
   --scene-gap: clamp(16px, 3vw, 35px);
@@ -60,7 +54,6 @@ p {
   margin: 5px auto 40px auto;
 }
 
-/*Inhalt vom weissen Rahmen (Titel Parkinator)*/
 .p-icon {
   width: 1em;
   height: 1em;
@@ -85,7 +78,6 @@ p {
   z-index: 1;
 }
 
-/*Inhalt vom weissen Rahmen (Auswahl-Buttons)*/
 .auswahl-buttons {
   display: flex;
   gap: 40px;
@@ -133,7 +125,6 @@ p {
   background: #0073cc;
 }
 
-/*Inhalt vom weissen Rahmen (Dropdowbn-Menüs)*/
 .uhrzeit-dropdown {
   position: absolute;
   z-index: 9999;
@@ -190,7 +181,6 @@ p {
   background: #0073cc;
 }
 
-/*Inhalt vom weissen Rahmen (Baum, Bank und Parkuhr)*/
 .deko-elemente {
   position: absolute;
   bottom: var(--scene-gap);
@@ -225,8 +215,6 @@ p {
   height: auto;
 }
 
-
-/*Hintergrund Strasse*/
 .strassenbereich {
   width: 98vw;          
   margin: 40px auto;   
@@ -240,9 +228,6 @@ p {
   display: block; 
 }
 
-
-
-/*Charts Bereich*/
 .charts-grid {
   width: 90vw;
   max-width: 1200px;
@@ -256,7 +241,6 @@ p {
   position: absolute;
   inset: 0;
 }
-
 
 .chart-card {
   background: #fff;
@@ -304,14 +288,11 @@ p {
   transform: scale(1.03);
 }
 
-
-
-/*Overlay Fenster*/
 .overlay{
   position: fixed !important;
   left: 50% !important;
-  top: 20px; /* wird im JS überschrieben */
-  transform: translateX(-50%) !important; /* NUR X, kein Y! */
+  top: 20px; 
+  transform: translateX(-50%) !important; 
   display: none;
   z-index: 9999;
 }
@@ -346,39 +327,35 @@ p {
   left: 20px;
   margin: 0;
 }
-/* Stage = der Rahmen, in dem das Strassenbild liegt */
+
 .road-stage{
   position: relative;
   width: 98vw;
-  max-width: 1200px;            /* optional */
+  max-width: 1200px;            
   margin: 0 auto;
 }
 
-/* das Bild selbst */
 .hintergrund-strasse{
   width: 100%;
   height: auto;
   display: block;
 }
 
-/* Overlay Container über dem Bild */
 .charts-overlay{
   position: absolute;
-  inset: 0;                     /* top:0 right:0 bottom:0 left:0 */
-  pointer-events: none;         /* damit man nicht "das Overlay" blockiert */
+  inset: 0;                     
+  pointer-events: none;         
 }
 
-/* Chart-Cards müssen klickbar bleiben */
 .chart-card{
   position: absolute;
   pointer-events: auto;
-  width: 400px;                 /* passend wie im Mockup */
-  max-width: 42vw;              /* responsive */
+  width: 400px;                 
+  max-width: 42vw;              
   transform: translate(-50%, -50%); 
-  height: 400px;/* wir positionieren auf Mittelpunkt */
+  height: 400px;
 }
 
-/* Canvas kleiner, wie im Layout */
 .chart-card canvas{
   width: 240px !important;
   height: 240px !important;
@@ -386,13 +363,13 @@ p {
 
 .road-stage{
   position: relative;
-  width: 98vw;       /* oder 100vw */
-  max-width: none;   /* WICHTIG: keine Begrenzung */
+  width: 98vw;       
+  max-width: none;   
   margin: 0 auto;
 }
 
 .overlay-content{
-  padding: 80px 24px 24px; /* oben Platz für Titel/Close */
+  padding: 80px 24px 24px; 
   box-sizing: border-box;
   height: 100%;
 }
@@ -419,7 +396,7 @@ p {
   border: 21px solid #FFF;
   background: #747474;
 
-  position: fixed;                 /* oder absolute, je nachdem was du nutzt */
+  position: fixed;                 
   left: 50%;
   transform: translateX(-50%);
 
@@ -427,14 +404,14 @@ p {
   z-index: 9999;
   box-sizing: border-box;
 
-  padding: 24px;                   /* gibt “Innenrand” */
-  overflow: hidden;                /* damit nichts über den Rand läuft */
+  padding: 24px;                   
+  overflow: hidden;                
 }
 
 .overlay-chart-wrap{
   margin-top: 16px;
   width: 100%;
-  height: 260px;          /* wichtig: ohne Höhe kein Chart */
+  height: 260px;          
   background: #fff;
   border-radius: 12px;
   padding: 12px;
@@ -449,7 +426,7 @@ p {
 .overlay-pie-wrap{
   margin-top: 16px;
   width: 100%;
-  height: 240px;            /* wichtig! */
+  height: 240px;            
   background: #fff;
   border-radius: 12px;
   padding: 12px;
@@ -468,15 +445,14 @@ p {
   text-align: center;
 }
 
-/* Platzhalter statt Diagramm */
 .chart-placeholder{
   width: 100%;
-  flex: 1;                      /* nimmt den freien Platz in der Card */
+  flex: 1;                      
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;       /* ✅ mittig */
-  padding: 10px 16px 60px;       /* ✅ unten Platz für Button + "Messwerte" */
+  justify-content: center;       
+  padding: 10px 16px 60px;       
   box-sizing: border-box;
 }
 
@@ -550,8 +526,8 @@ p {
 
 .overlay{
   width: min(714px, 94vw);
-  max-height: 88vh;          /* ✅ begrenzt die Höhe -> Voraussetzung fürs Scrollen */
-  height: auto;              /* ✅ nicht starr 820px erzwingen */
+  max-height: 88vh;          
+  height: auto;              
   border-radius: 16px;
   border: 21px solid #FFF;
   background: #747474;
@@ -565,34 +541,29 @@ p {
   z-index: 9999;
   box-sizing: border-box;
 
-  padding: 0;                /* ✅ Padding kommt in .overlay-content */
-  overflow: hidden;          /* ✅ Rahmen bleibt sauber */
+  padding: 0;                
+  overflow: hidden;          
 
-  display: flex;             /* ✅ wichtig */
-  flex-direction: column;    /* ✅ Titel/Close oben, Content darunter */
+  display: flex;             
+  flex-direction: column;    
 }
 
-
-/* Overlay ist standardmäßig immer versteckt */
 #overlay{
   display: none;
 }
 
-/* Overlay: Rahmen bleibt fix, Inhalt scrollt */
 #overlay{
-  max-height: 88vh;     /* wichtig: begrenzt die Höhe */
-  overflow: hidden;     /* nur innen scrollen */
+  max-height: 88vh;     
+  overflow: hidden;     
 }
 
-/* Scroll-Container */
 #overlay .overlay-content{
   height: 100%;
-  max-height: 88vh;     /* wichtig, damit es wirklich scrollt */
+  max-height: 88vh;     
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   box-sizing: border-box;
 }
-
 
 @media (max-width: 1570px) {
   h1 { 
@@ -620,13 +591,10 @@ p {
   }
 }
 
-
-
-/* 2) Tablet / Zwischenzone 601px–900px (NEU, harmonisch) */
 @media (min-width: 601px) and (max-width: 900px) {
   body{
-    font-size: 60px; /* Basis war 120px */
-    height: auto;    /* wichtig: sonst "klemmt" der Inhalt */
+    font-size: 60px;
+    height: auto;    
   }
 
   h1{
@@ -704,7 +672,6 @@ p {
     bottom: 12px;
   }
 
-  /* Overlay */
   .overlay{
     width: min(640px, 94vw);
     height: min(760px, 86vh);
@@ -726,7 +693,6 @@ p {
   .map-wrap{ height: 260px; }
   .overlay-chart-wrap{ height: 240px; }
 
-  /* Dropdowns etwas kompakter */
   .uhrzeit-dropdown,
   .wochentag-dropdown{
     font-size: 18px;
@@ -745,11 +711,10 @@ p {
   }
 
   .chart-card{
-    max-width: 52vw; /* etwas mehr Luft */
+    max-width: 52vw; 
   }
 }
 
-/* 4) Mobile <= 768px */
 @media (max-width: 768px) {
   body{
     font-size: 46px;
@@ -839,7 +804,6 @@ p {
   .overlay-chart-wrap{ height: 220px; }
 }
 
-/* 5) Small Mobile <= 600px */
 @media (max-width: 600px) {
   h1{
     font-size: clamp(44px, 11vw, 72px);
@@ -880,8 +844,6 @@ p {
 }
 
 @media (max-width: 768px){
-
-  /* Container: nicht mehr absolute Bühne, sondern kompakt zentriert */
   .deko-elemente{
     position: relative !important;
     left: auto !important;
@@ -895,8 +857,8 @@ p {
     display: flex !important;
     align-items: flex-end;
     justify-content: center;
-    gap: 0 !important;           /* kein Grid-gap */
-    padding: 0 8px !important;   /* wenig Außenluft */
+    gap: 0 !important;           
+    padding: 0 8px !important;   
     box-sizing: border-box;
     margin-top: 40px;
   }
@@ -910,31 +872,29 @@ p {
     bottom: auto !important;
   }
 
-  /* Größen */
   .deko-elemente .bank{
-    height: 150px !important;     /* Bank kleiner */
+    height: 150px !important;     
     width: auto !important;
     transform: scale(0.78);
     transform-origin: bottom center;
-    z-index: 2;                   /* Bank vorne */
+    z-index: 2;                   
   }
 
   .deko-elemente .baum{
     height: 125px !important;
     width: auto !important;
-    margin-right: -26px;          /* näher zur Bank (und leicht dahinter) */
+    margin-right: -26px;          
     z-index: 1;
   }
 
   .deko-elemente .parkuhr{
     height: 135px !important;
     width: auto !important;
-    margin-left: -18px;           /* näher zur Bank */
+    margin-left: -18px;           
     z-index: 1;
   }
 }
 
-/* Extra klein: noch kompakter */
 @media (max-width: 480px){
   .deko-elemente{ padding: 0 6px !important;
     margin-bottom: -140px;
@@ -957,30 +917,25 @@ p {
 }
 
 @media (max-width: 768px) {
-
-  /* Container leicht einrücken */
   .rahmen-inhalt{
     width: 100%;
-    padding: 0 16px;   /* Abstand zum weißen Rahmen */
+    padding: 0 16px;   
     box-sizing: border-box;
   }
 
-  /* Wochentag & Uhrzeit */
   .auswahl-button{
-    width: 100%;              /* Basis */
-    max-width: 340px;         /* 🔥 macht sie schmal */
-    margin: 0 auto;           /* zentriert */
+    width: 100%;              
+    max-width: 340px;         
+    margin: 0 auto;           
   }
 
-  /* Hauptbutton */
   .belegung-anzeige-button{
     width: 100%;
-    max-width: 360px;         /* 🔥 ebenfalls schmaler */
+    max-width: 360px;        
     margin: 0 auto;
   }
 }
 
-/* Extra klein (z.B. iPhone SE) */
 @media (max-width: 480px) {
 
   .auswahl-button{
@@ -999,12 +954,11 @@ p {
   }
 
   .road-stage{
-    width: 92vw;          /* nicht am Rand kleben */
-    max-width: 420px;     /* wie iPhone Breite */
+    width: 92vw;          
+    max-width: 420px;     
     margin: 0 auto;
   }
 
-  /* Cards als "unsichtbarer" Anker */
   .chart-card.pin-mode{
     background: transparent !important;
     box-shadow: none !important;
@@ -1019,7 +973,6 @@ p {
     display: none !important;
   }
 
-  /* Pin-Button */
   .chart-card.pin-mode .details-btn{
     width: 44px;
     height: 44px;
@@ -1031,23 +984,19 @@ p {
     box-shadow: 0 8px 16px rgba(0,0,0,0.20);
   }
 
-  /* P im Kreis */
   .chart-card.pin-mode .details-btn::before{
     content: "P";
     position: absolute;
     inset: 0;
     display: grid;
-
   }
 
 }
 
-/* Overlay Pie standardmäßig aus */
 .overlay-pie-wrap{
   display: none;
 }
 
-/* Nur Mobile zeigt das Pie im Overlay */
 @media (max-width: 1024px){
   .overlay-pie-wrap{
     display: block;
@@ -1056,26 +1005,23 @@ p {
 
 @media (max-width: 480px){
 
-  /* Overlay selbst: nicht zu hoch, damit es in den Screen passt */
   .overlay{
-    height: 88vh;              /* passt in den Screen */
+    height: 88vh;              
     max-height: 88vh;
-    overflow: hidden;          /* Scroll nur innen */
+    overflow: hidden;          
   }
 
   .overlay-content{
     height: 100%;
-    overflow-y: auto;          /* ✅ scrollen */
+    overflow-y: auto;          
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 18px;      /* etwas Luft unten */
+    padding-bottom: 18px;     
   }
 
-  /* Map/Charts: kompakter, damit weniger “gequetscht” */
   .map-wrap{ height: 220px; }
   .overlay-pie-wrap{ height: 210px; }      /* falls du das Pie auf Mobile zeigst */
   .overlay-chart-wrap{ height: 240px; }
 
-  /* optional: Scrollbar optisch weniger “hart” */
   .overlay-content::-webkit-scrollbar{
     width: 8px;
   }
@@ -1096,15 +1042,14 @@ p {
     background: #0086EC;
     border: 4px solid #fff;
 
-    position: relative;     /* 🔑 wichtig */
-    color: transparent;     /* echten Text ausblenden */
+    position: relative;     
+    color: transparent;     
   }
 
-  /* Das "P" */
   .chart-card.pin-mode .details-btn::before{
     content: "P";
 
-    position: absolute;     /* 🔑 echte Zentrierung */
+    position: absolute;     
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -1133,20 +1078,20 @@ p {
     content: attr(data-name);
     margin-top: 8px;
 
-    font-size: 10px;          /* ⬅️ größer */
+    font-size: 10px;         
     font-weight: 700;
     line-height: 1.2;
 
     color: #003a6b;
     background: #ffffff;
 
-    padding: 4px 8px;         /* ⬅️ mehr Fläche */
+    padding: 4px 8px;         
     border-radius: 8px;
 
     white-space: nowrap;
     pointer-events: none;
 
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15); /* ⬅️ Kontrast */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15); 
   }
 }
 
@@ -1162,7 +1107,6 @@ p {
     box-shadow: none !important;
   }
 
-  /* Der Pin-Button */
   .chart-card.pin-mode .details-btn{
     display: flex;
     align-items: center;
@@ -1171,10 +1115,9 @@ p {
 
   .chart-card.pin-mode .pin-letter{
     display: inline-block;
-    transform: translate(0px, 2px); /* ⬅️ X,Y anpassen */
+    transform: translate(0px, 2px); 
   }
 
-  /* Label darunter */
   .chart-card.pin-mode .pin-label{
     font-size: 14px;
     font-weight: 700;
@@ -1190,7 +1133,6 @@ p {
     pointer-events: none;
   }
 
-  /* wichtig: altes ::after Label deaktivieren, falls noch drin */
   .chart-card.pin-mode::after{
     content: none !important;
   }
@@ -1209,7 +1151,7 @@ p {
   .chart-card.pin-mode{
     display: flex;
     flex-direction: column;
-    align-items: center;   /* Pin + Label gleiche Mittelachse */
+    align-items: center;   
     gap: 8px;
     padding: 0;
     background: transparent;
@@ -1226,7 +1168,7 @@ p {
     align-items: center;
     justify-content: center;
 
-    margin: 0 auto;        /* 🔑 Kreis wirklich mittig */
+    margin: 0 auto;        
     position: static !important;
 
     background: #0086EC;
@@ -1238,10 +1180,9 @@ p {
     line-height: 1;
   }
 
-  /* ✅ NUR das P verschieben (nicht den Kreis) */
   .chart-card.pin-mode .pin-letter{
     display: inline-block;
-    transform: translate(0px, 2px); /* <-- hier feinjustieren */
+    transform: translate(0px, 2px); 
   }
 
   .chart-card.pin-mode .pin-label{
@@ -1257,7 +1198,6 @@ p {
     white-space: nowrap;
   }
 
-  /* falls vorher pseudo-P genutzt wurde */
   .chart-card.pin-mode .details-btn::before,
   .chart-card.pin-mode .details-btn::after{
     content: none !important;
@@ -1374,7 +1314,7 @@ p {
 @media (max-width: 1024px){
 
   .overlay{
-    width: 94vw;              /* wie Mobile: flexibel */
+    width: 94vw;              
     height: 88vh;
     max-height: 88vh;
     overflow: hidden;
@@ -1388,15 +1328,10 @@ p {
   }
 
   .map-wrap{ height: 220px; }
-  .overlay-pie-wrap{ height: 210px; }      /* falls Pie angezeigt wird */
+  .overlay-pie-wrap{ height: 210px; }      
   .overlay-chart-wrap{ height: 240px; }
 }
 
-/* =========================
-   SMALL DESKTOP (1025–1300px)
-   Card-Charts kleiner
-   ========================= */
-/* SMALL DESKTOP 1025–1300: Card-Charts deutlich kleiner */
 @media (min-width: 1025px) and (max-width: 1400px){
 
   .chart-card{
@@ -1429,7 +1364,6 @@ p {
   }
 }
 
-/* PINS – MOBILE (≤768px) */
 @media (max-width: 768px){
   .chart-card.pin-mode .details-btn{
     width: 56px;
@@ -1446,12 +1380,6 @@ p {
   }
 }
 
-
-/* =========================
-   PIN SIZE STUFEN (GANZ UNTEN)
-   ========================= */
-
-/* 1) Pins gross (bis 1300px) */
 @media (min-width: 769px) and (max-width: 1300px){
   .chart-card.pin-mode .details-btn{
     width: 72px !important;
@@ -1468,7 +1396,6 @@ p {
   }
 }
 
-/* 2) Pins mittel (bis 1024px) */
 @media (max-width: 1024px){
   .chart-card.pin-mode .details-btn{
     width: 66px !important;
@@ -1485,7 +1412,6 @@ p {
   }
 }
 
-/* 3) Pins klein (bis 768px) */
 @media (max-width: 768px){
   .chart-card.pin-mode .details-btn{
     width: 56px !important;
@@ -1502,7 +1428,6 @@ p {
   }
 }
 
-/* Laptop/kleine Bildschirmhöhe: Overlay darf nie höher als der Screen sein */
 @media (max-height: 900px){
   .overlay{
     top: 50% !important;                 /* überschreibt JS-top */
@@ -1522,20 +1447,18 @@ p {
   }
 }
 
-/* DESKTOP/LAPTOP: Overlay etwas größer + Bar-Chart mehr Höhe */
 @media (min-width: 1025px) and (max-width: 1600px){
   #overlay{
-    width: min(820px, 96vw);   /* etwas breiter */
-    max-height: 92vh;          /* etwas höher */
+    width: min(820px, 96vw);  
+    max-height: 92vh;          
   }
 
   #overlay .overlay-content{
-    padding-bottom: 28px;      /* Luft unten, damit nichts "ansteht" */
+    padding-bottom: 28px;      
   }
 
-  /* WICHTIG: mehr Platz für Achsenbeschriftung */
   #overlay .overlay-chart-wrap{
-    height: 340px;             /* statt 240/260 -> verhindert Abschneiden */
+    height: 340px;             
   }
 }
 
@@ -1548,18 +1471,15 @@ p {
   }
 }
 
-/* ===== FIX: Desktop/Laptop Overlay + Chart nicht abschneiden ===== */
 @media (min-width: 1025px){
 
-  /* Overlay insgesamt höher + breiter */
   #overlay{
     width: min(860px, 96vw) !important;
-    height: min(900px, 92vh) !important;   /* ✅ echte Höhe geben */
+    height: min(900px, 92vh) !important;   
     max-height: 92vh !important;
     overflow: hidden !important;
   }
 
-  /* Inhalt soll scrollen (falls nötig) */
   #overlay .overlay-content{
     height: 100% !important;
     overflow-y: auto !important;
@@ -1568,43 +1488,33 @@ p {
     box-sizing: border-box;
   }
 
-  /* ✅ DER WICHTIGE TEIL: Bar-Chart bekommt deutlich mehr Platz */
   #overlay .overlay-chart-wrap{
-    height: 420px !important;               /* ← verhindert abgeschnittene X-Achse */
+    height: 420px !important;               
   }
 
-  /* Canvas füllt den Container */
   #overlayDayChart{
     width: 100% !important;
     height: 100% !important;
   }
 }
 
-/* =========================
-   Tablet + Mobile:
-   gleichmäßiger Abstand unten im Overlay
-   ========================= */
 @media (max-width: 1024px){
 
   #overlay .overlay-content{
-    padding-bottom: 24px !important; /* 🔥 kleiner, sauberer Abstand */
+    padding-bottom: 24px !important; 
   }
 
-  /* optional: Diagramm nicht direkt am Rand kleben */
   #overlay .overlay-chart-wrap{
     margin-bottom: 0 !important;
   }
 }
 
-/* Tablet + Mobile: unten IMMER gleichmäßiger Abstand */
 @media (max-width: 1024px){
   body #overlay.is-open .overlay-content{
-    /* oben Platz für Titel/Close lassen, unten kleiner Abstand */
-    padding: 80px 16px 24px !important;  /* <-- nur hier der "kleine Abstand" unten */
+    padding: 80px 16px 24px !important;
   }
 }
 
-/* Optional: sehr kleine Geräte noch etwas kompakter */
 @media (max-width: 480px){
   body #overlay.is-open .overlay-content{
     padding: 72px 14px 22px !important;
@@ -1614,15 +1524,14 @@ p {
 @media (max-width: 1024px){
   body #overlay.is-open .overlay-chart-wrap,
   body #overlay.is-open .overlay-pie-wrap{
-    margin-bottom: 0 !important; /* verhindert doppelten/komischen Abstand */
+    margin-bottom: 0 !important; 
   }
 }
 
-/* Tablet + Mobile: immer Luft unten im Overlay (auch wenn Padding überschrieben wird) */
 @media (max-width: 1024px){
   body #overlay .overlay-content::after{
     content: "";
     display: block;
-    height: 24px;          /* <- gewünschter Abstand */
+    height: 24px;          
   }
 }
