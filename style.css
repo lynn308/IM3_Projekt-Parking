@@ -548,26 +548,50 @@ p {
   max-width: 320px;
 }
 
-/* Overlay: Rahmen bleibt fix, Inhalt scrollt */
 .overlay{
-  overflow: hidden;          /* Rahmen sauber */
+  width: min(714px, 94vw);
+  max-height: 88vh;          /* ✅ begrenzt die Höhe -> Voraussetzung fürs Scrollen */
+  height: auto;              /* ✅ nicht starr 820px erzwingen */
+  border-radius: 16px;
+  border: 21px solid #FFF;
+  background: #747474;
+
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  display: none;
+  z-index: 9999;
+  box-sizing: border-box;
+
+  padding: 0;                /* ✅ Padding kommt in .overlay-content */
+  overflow: hidden;          /* ✅ Rahmen bleibt sauber */
+
+  display: flex;             /* ✅ wichtig */
+  flex-direction: column;    /* ✅ Titel/Close oben, Content darunter */
 }
 
-/* DAS ist der Scroll-Container */
-.overlay-content{
+
+/* Overlay ist standardmäßig immer versteckt */
+#overlay{
+  display: none;
+}
+
+/* Overlay: Rahmen bleibt fix, Inhalt scrollt */
+#overlay{
+  max-height: 88vh;     /* wichtig: begrenzt die Höhe */
+  overflow: hidden;     /* nur innen scrollen */
+}
+
+/* Scroll-Container */
+#overlay .overlay-content{
   height: 100%;
-  overflow-y: auto;          /* ✅ scrollen */
+  max-height: 88vh;     /* wichtig, damit es wirklich scrollt */
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
 }
-
-/* Damit Map/Charts nicht aus dem Container drücken */
-.map-wrap,
-.overlay-chart-wrap,
-.overlay-pie-wrap{
-  flex: 0 0 auto;
-}
-
-
 
 
 @media (max-width: 1570px) {
@@ -595,6 +619,8 @@ p {
     height: 220px !important;
   }
 }
+
+
 
 /* 2) Tablet / Zwischenzone 601px–900px (NEU, harmonisch) */
 @media (min-width: 601px) and (max-width: 900px) {
@@ -713,7 +739,6 @@ p {
   }
 }
 
-/* 3) Tablet/Small <= 1024px (allgemein) */
 @media (max-width: 1024px) {
   .road-stage{
     width: 98vw;
@@ -1038,7 +1063,6 @@ p {
     overflow: hidden;          /* Scroll nur innen */
   }
 
-  /* Inhalt scrollt */
   .overlay-content{
     height: 100%;
     overflow-y: auto;          /* ✅ scrollen */
@@ -1056,7 +1080,6 @@ p {
     width: 8px;
   }
 }
-
 
 .chart-card{
   z-index: 10;
@@ -1256,7 +1279,6 @@ p {
     gap: 8px !important;
   }
 
-  /* Button darf NICHT absolute sein im Pin-Mode */
   .chart-card.pin-mode .details-btn{
     position: static !important;
     left: auto !important;
@@ -1302,7 +1324,6 @@ p {
   }
 }
 
-/* PINS – TABLET (≤1024px) */
 @media (max-width: 1024px){
   .chart-card.pin-mode .details-btn{
     width: 62px;
@@ -1319,10 +1340,6 @@ p {
   }
 }
 
-
-/* =========================
-   TABLET: Charts kleiner
-   ========================= */
 @media (max-width: 1024px){
 
   .chart-card:not(.pin-mode){
@@ -1354,10 +1371,6 @@ p {
   }
 }
 
-/* =========================
-   TABLET: Overlay anpassen
-   ========================= */
-/* Tablet soll das gleiche Overlay-Verhalten wie Mobile haben */
 @media (max-width: 1024px){
 
   .overlay{
@@ -1509,3 +1522,107 @@ p {
   }
 }
 
+/* DESKTOP/LAPTOP: Overlay etwas größer + Bar-Chart mehr Höhe */
+@media (min-width: 1025px) and (max-width: 1600px){
+  #overlay{
+    width: min(820px, 96vw);   /* etwas breiter */
+    max-height: 92vh;          /* etwas höher */
+  }
+
+  #overlay .overlay-content{
+    padding-bottom: 28px;      /* Luft unten, damit nichts "ansteht" */
+  }
+
+  /* WICHTIG: mehr Platz für Achsenbeschriftung */
+  #overlay .overlay-chart-wrap{
+    height: 340px;             /* statt 240/260 -> verhindert Abschneiden */
+  }
+}
+
+@media (max-height: 800px){
+  #overlay{
+    max-height: 94vh;
+  }
+  #overlay .overlay-chart-wrap{
+    height: 360px;
+  }
+}
+
+/* ===== FIX: Desktop/Laptop Overlay + Chart nicht abschneiden ===== */
+@media (min-width: 1025px){
+
+  /* Overlay insgesamt höher + breiter */
+  #overlay{
+    width: min(860px, 96vw) !important;
+    height: min(900px, 92vh) !important;   /* ✅ echte Höhe geben */
+    max-height: 92vh !important;
+    overflow: hidden !important;
+  }
+
+  /* Inhalt soll scrollen (falls nötig) */
+  #overlay .overlay-content{
+    height: 100% !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 24px !important;
+    box-sizing: border-box;
+  }
+
+  /* ✅ DER WICHTIGE TEIL: Bar-Chart bekommt deutlich mehr Platz */
+  #overlay .overlay-chart-wrap{
+    height: 420px !important;               /* ← verhindert abgeschnittene X-Achse */
+  }
+
+  /* Canvas füllt den Container */
+  #overlayDayChart{
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+/* =========================
+   Tablet + Mobile:
+   gleichmäßiger Abstand unten im Overlay
+   ========================= */
+@media (max-width: 1024px){
+
+  #overlay .overlay-content{
+    padding-bottom: 24px !important; /* 🔥 kleiner, sauberer Abstand */
+  }
+
+  /* optional: Diagramm nicht direkt am Rand kleben */
+  #overlay .overlay-chart-wrap{
+    margin-bottom: 0 !important;
+  }
+}
+
+/* Tablet + Mobile: unten IMMER gleichmäßiger Abstand */
+@media (max-width: 1024px){
+  body #overlay.is-open .overlay-content{
+    /* oben Platz für Titel/Close lassen, unten kleiner Abstand */
+    padding: 80px 16px 24px !important;  /* <-- nur hier der "kleine Abstand" unten */
+  }
+}
+
+/* Optional: sehr kleine Geräte noch etwas kompakter */
+@media (max-width: 480px){
+  body #overlay.is-open .overlay-content{
+    padding: 72px 14px 22px !important;
+  }
+}
+
+@media (max-width: 1024px){
+  body #overlay.is-open .overlay-chart-wrap,
+  body #overlay.is-open .overlay-pie-wrap{
+    margin-bottom: 0 !important; /* verhindert doppelten/komischen Abstand */
+  }
+}
+
+/* Tablet + Mobile: immer Luft unten im Overlay (auch wenn Padding überschrieben wird) */
+@media (max-width: 1024px){
+  body #overlay .overlay-content::after{
+    content: "";
+    display: block;
+    height: 24px;          /* <- gewünschter Abstand */
+  }
+}

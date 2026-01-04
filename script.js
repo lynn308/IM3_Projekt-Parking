@@ -73,6 +73,12 @@ let currentDay = null;
 let currentHour = null;
 
 
+// Sicherheits-Fix: Overlay bei Page-Load immer verstecken
+document.addEventListener('DOMContentLoaded', () => {
+  overlay.style.display = 'none';
+  overlay.style.top = '20px';  // optional, neutraler Startwert
+  mapFrame.src = '';
+});
 
 
 
