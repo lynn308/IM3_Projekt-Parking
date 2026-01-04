@@ -548,6 +548,27 @@ p {
   max-width: 320px;
 }
 
+/* Overlay: Rahmen bleibt fix, Inhalt scrollt */
+.overlay{
+  overflow: hidden;          /* Rahmen sauber */
+}
+
+/* DAS ist der Scroll-Container */
+.overlay-content{
+  height: 100%;
+  overflow-y: auto;          /* ✅ scrollen */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Damit Map/Charts nicht aus dem Container drücken */
+.map-wrap,
+.overlay-chart-wrap,
+.overlay-pie-wrap{
+  flex: 0 0 auto;
+}
+
+
+
 
 @media (max-width: 1570px) {
   h1 { 
@@ -1467,3 +1488,24 @@ p {
     padding: 4px 10px !important;
   }
 }
+
+/* Laptop/kleine Bildschirmhöhe: Overlay darf nie höher als der Screen sein */
+@media (max-height: 900px){
+  .overlay{
+    top: 50% !important;                 /* überschreibt JS-top */
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+
+    width: min(714px, 94vw) !important;
+    height: auto !important;
+    max-height: 88vh !important;         /* <= wichtig */
+    overflow: hidden !important;         /* Rahmen bleibt sauber */
+  }
+
+  .overlay-content{
+    height: 100% !important;
+    overflow-y: auto !important;         /* Inhalt scrollt statt abgeschnitten */
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
