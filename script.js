@@ -73,10 +73,9 @@ let currentDay = null;
 let currentHour = null;
 
 
-// Sicherheits-Fix: Overlay bei Page-Load immer verstecken
 document.addEventListener('DOMContentLoaded', () => {
   overlay.style.display = 'none';
-  overlay.style.top = '20px';  // optional, neutraler Startwert
+  overlay.style.top = '20px';  
   mapFrame.src = '';
 });
 
@@ -87,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 closeBtn.addEventListener('click', () => {
   overlay.style.display = 'none';
-  mapFrame.src = ''; // stoppt Google Maps
+  mapFrame.src = ''; 
 });
 function renderOverlayDayChart(labels, values, dayLabel) {
   if (!overlayDayCanvas) {
@@ -168,9 +167,6 @@ function renderOverlayPieChart(belegte, freie, titleText) {
 }
 
 
-
-// Übergangslösung: 24x dein bestehendes Endpoint aufrufen
-// (funktioniert sofort, aber etwas langsamer)
 async function loadOverlayDayAverage(parkhausId, day) {
   const url = `https://im3-projekt.lynnhartmann.ch/unload_day_avg.php?parkhaus_id=${encodeURIComponent(parkhausId)}&day=${encodeURIComponent(day)}`;
   const res = await fetch(url);
@@ -226,7 +222,6 @@ if (hasPieData) {
   const dayLabel = currentDay || '—';
 const labels = hourLabels24();
 
-// Erstmal "leer" anzeigen (optional)
 renderOverlayDayChart(labels, new Array(24).fill(0), dayLabel);
 
 try {
@@ -265,13 +260,11 @@ try {
 
 
 
-// DATEN LADEN UND CHARTS ERSTELLEN
-
 const chartsContainer = document.getElementById('charts');
 const toInt = v => { const n = parseInt(v, 10); return Number.isFinite(n) ? n : 0; };
 
 function renderCharts(rows) {
-  chartsContainer.innerHTML = ""; // alte Charts entfernen
+  chartsContainer.innerHTML = ""; 
 
   const isMobile = window.matchMedia("(max-width: 1024px)").matches;
   const POS = isMobile ? CHART_POS_MOBILE : CHART_POS;
@@ -285,7 +278,7 @@ function renderCharts(rows) {
     const card = document.createElement('div');
     card.className = 'chart-card';
 
-    // (Deine Positionierung bleibt gleich)
+    
     const id = String(row.parkhaus_id ?? "");
     const pos = POS[id];
     if (pos) {
@@ -306,7 +299,7 @@ subtitle.textContent =
     const canvas = document.createElement('canvas');
 
 
-// Button
+
 const button = document.createElement('button');
 button.className = 'details-btn';
 button.addEventListener('click', () => openOverlay(row, card));
@@ -319,7 +312,6 @@ if (isMobile) {
   button.innerHTML = '<span class="pin-letter">P</span>';
 
 
-  // ✅ echtes Label unter dem Pin
   const label = document.createElement('div');
   label.className = 'pin-label';
   label.textContent = row.parkhaus_name ?? '';
@@ -333,14 +325,13 @@ if (isMobile) {
   card.appendChild(button);
 }
 
-// sample Info
-// sample Info
+
 const small = document.createElement('div');
 small.style.fontSize = "14px";
 small.style.color = "#666";
 small.textContent = row.samples ? `${row.samples} Messwerte` : "Keine Daten";
 
-// ✅ NUR Desktop / Tablet
+
 if (!isMobile) {
 
   const hasData = (belegte + freie) > 0;
@@ -349,7 +340,6 @@ if (!isMobile) {
   card.appendChild(subtitle);
 
   if (hasData) {
-    // ✅ Diagramm anzeigen
     card.appendChild(canvas);
 
     new Chart(canvas, {
@@ -374,7 +364,6 @@ if (!isMobile) {
     });
 
   } else {
-    // ❌ KEINE DATEN → Text anzeigen
     const placeholder = document.createElement('div');
     placeholder.className = 'chart-placeholder';
 
@@ -413,9 +402,6 @@ async function loadAverage(day, hour) {
 
 
 
-
-// DROPDOWN FÜR UHRZEIT (SCROLLBAR)
-
 (function () {
   const timeSelect = document.querySelector('.select-uhrzeit');
   if (!timeSelect) return;
@@ -423,7 +409,7 @@ async function loadAverage(day, hour) {
   let panel = null;
   let onDocClick, onScroll, onResize;
 
-  // Position des Dropdowns unter dem Button berechnen
+  
   function positionPanel() {
     if (!panel) return;
     const r = timeSelect.getBoundingClientRect();
@@ -436,7 +422,6 @@ async function loadAverage(day, hour) {
     panel.style.top = (window.scrollY + r.bottom + 6) + 'px';
   }
 
-  // Dropdown schließen
   function closePanel() {
     if (!panel) return;
     panel.remove();
@@ -446,13 +431,12 @@ async function loadAverage(day, hour) {
     window.removeEventListener('resize', onResize);
   }
 
-  // Dropdown öffnen
   function openPanel() {
     if (panel) return;
     panel = document.createElement('div');
     panel.className = 'uhrzeit-dropdown';
 
-    // Uhrzeiten aus dem <select> übernehmen
+  
     for (const opt of timeSelect.options) {
       if (opt.disabled || opt.hidden || opt.value === '') continue;
       const item = document.createElement('div');
@@ -469,7 +453,6 @@ async function loadAverage(day, hour) {
     document.body.appendChild(panel);
     positionPanel();
 
-    // Klick außerhalb schließt das Menü
     onDocClick = (e) => {
       if (!panel) return;
       if (e.target === timeSelect || panel.contains(e.target)) return;
@@ -483,13 +466,11 @@ async function loadAverage(day, hour) {
     window.addEventListener('resize', onResize);
   }
 
-  // Klick auf den Button öffnet/schließt das Menü
   timeSelect.addEventListener('mousedown', (e) => {
     e.preventDefault();
     if (panel) closePanel(); else openPanel();
   });
 
-  // Tastatursteuerung
   timeSelect.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closePanel();
     if (e.key === 'Enter' || e.key === ' ') {
@@ -499,9 +480,6 @@ async function loadAverage(day, hour) {
   });
 })();
 
-
-
-// DROPDOWN FÜR WOCHENTAG (OHNE SCROLLBAR)
 
 (function () {
   const daySelect = document.querySelector('.select-wochentag');
@@ -580,9 +558,6 @@ async function loadAverage(day, hour) {
 })();
 
 
-
-// Belegung-Anzeige-BUTTON: SCROLLT ZU DEN CHARTS
-
 document.addEventListener('DOMContentLoaded', () => {
   const scrollButton = document.querySelector('.belegung-anzeige-button');
   const strassenbereich = document.querySelector('.strassenbereich');
@@ -629,10 +604,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let lastRows = null;
 
-// In loadAverage(), direkt bevor renderCharts(data) aufgerufen wird:
-/// lastRows = data;   (siehe unten)
-
-// Beim Resize neu rendern (wenn es schon Daten gibt)
 let resizeTimer = null;
 window.addEventListener('resize', () => {
   if (!lastRows) return;

@@ -565,6 +565,8 @@ p {
   box-sizing: border-box;
 }
 
+
+
 @media (max-width: 1570px) {
   h1 { 
     font-size: clamp(90px, 8vw, 160px);
@@ -1019,7 +1021,7 @@ p {
   }
 
   .map-wrap{ height: 220px; }
-  .overlay-pie-wrap{ height: 210px; }      /* falls du das Pie auf Mobile zeigst */
+  .overlay-pie-wrap{ height: 210px; }     
   .overlay-chart-wrap{ height: 240px; }
 
   .overlay-content::-webkit-scrollbar{
@@ -1430,19 +1432,19 @@ p {
 
 @media (max-height: 900px){
   .overlay{
-    top: 50% !important;                 /* überschreibt JS-top */
+    top: 50% !important;                 
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
 
     width: min(714px, 94vw) !important;
     height: auto !important;
-    max-height: 88vh !important;         /* <= wichtig */
-    overflow: hidden !important;         /* Rahmen bleibt sauber */
+    max-height: 88vh !important;         
+    overflow: hidden !important;         
   }
 
   .overlay-content{
     height: 100% !important;
-    overflow-y: auto !important;         /* Inhalt scrollt statt abgeschnitten */
+    overflow-y: auto !important;         
     -webkit-overflow-scrolling: touch;
   }
 }
@@ -1534,4 +1536,100 @@ p {
     display: block;
     height: 24px;          
   }
+}
+
+.weisser-rahmen{
+  position: relative;
+}
+
+body .weisser-rahmen .deko-elemente{
+  position: absolute !important;
+  left: 50% !important;
+  bottom: var(--scene-gap) !important;
+  transform: translateX(-50%) !important;
+
+  width: min(980px, 94%) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr !important;
+  align-items: end !important;
+  column-gap: clamp(14px, 4vw, 120px) !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body .weisser-rahmen .deko-elemente .baum,
+body .weisser-rahmen .deko-elemente .bank,
+body .weisser-rahmen .deko-elemente .parkuhr{
+  position: static !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin: 0 !important;
+  transform: none !important;
+}
+
+body .weisser-rahmen .deko-elemente .baum{ justify-self: start; }
+body .weisser-rahmen .deko-elemente .bank{ justify-self: center; }
+body .weisser-rahmen .deko-elemente .parkuhr{ justify-self: end; }
+
+
+body .weisser-rahmen .deko-elemente .baum,
+body .weisser-rahmen .deko-elemente .parkuhr{
+  height: var(--scene-h) !important;
+  width: auto !important;
+  max-width: 34vw !important;
+}
+
+body .weisser-rahmen .deko-elemente .bank{
+  height: calc(var(--scene-h) * 0.70) !important;  
+  width: auto !important;
+  max-width: min(560px, 56vw) !important;          
+}
+
+
+@media (min-width: 820px) and (max-width: 1200px){
+  body .weisser-rahmen .deko-elemente{
+    column-gap: clamp(12px, 3vw, 70px) !important;
+    width: min(920px, 96%) !important;
+  }
+
+  body .weisser-rahmen .deko-elemente .bank{
+    max-width: min(480px, 52vw) !important;
+    height: calc(var(--scene-h) * 0.62) !important;
+  }
+}
+
+@media (max-width: 600px){
+  body .weisser-rahmen .deko-elemente .bank{
+    height: clamp(100px, 10vw, 85px) !important;
+    max-width: min(210px, 60vw) !important;
+  }
+}
+
+@media (min-width: 1200px){
+  body .weisser-rahmen .deko-elemente{
+    column-gap: clamp(600px, 14vw, 420px) !important;
+  }
+}
+
+.titel{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.p-icon{
+  width: clamp(70px, 8vw, 170px);
+  height: auto;
+
+  margin-right: clamp(11px, 0.5vw, 29px); 
+  flex-shrink: 0;
+}
+
+.titel-text{
+  line-height: 1;
 }
