@@ -1633,3 +1633,104 @@ body .weisser-rahmen .deko-elemente .bank{
 .titel-text{
   line-height: 1;
 }
+
+/* ===== Buttons sauber responsive (ans ENDE der CSS Datei) ===== */
+
+/* Container: 2 Buttons oben -> Grid statt flex-wrap */
+.auswahl-buttons{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(12px, 2.6vw, 40px);
+  width: min(900px, 100%);
+  margin: 0 auto;
+  align-items: stretch;
+}
+
+/* Einheitliche Button-Basis */
+.auswahl-button,
+.belegung-anzeige-button{
+  box-sizing: border-box;
+  border-radius: 14px;
+  line-height: 1.05;
+  letter-spacing: 0.5px;
+}
+
+/* Obere Buttons (Wochentag/Uhrzeit) */
+.auswahl-button{
+  width: 100%;              /* wichtig: keine fixe Breite mehr */
+  max-width: none;
+  min-height: clamp(54px, 6.2vw, 76px);
+  padding: clamp(10px, 1.6vw, 16px) clamp(14px, 2.4vw, 26px);
+  font-size: clamp(16px, 1.8vw, 22px);
+  white-space: nowrap;      /* hält "Wochentag" / "Uhrzeit" schön in einer Zeile */
+}
+
+/* Großer Button darunter */
+.belegung-anzeige-button{
+  width: min(820px, 100%);
+  max-width: none;
+  min-height: clamp(64px, 7vw, 92px);
+  padding: clamp(14px, 2.0vw, 20px) clamp(16px, 2.8vw, 34px);
+  font-size: clamp(16px, 2.0vw, 24px);
+  white-space: normal;      /* darf umbrechen, falls es eng wird */
+  text-align: center;
+}
+
+/* Tablet/Mobile: obere Buttons untereinander */
+@media (max-width: 768px){
+  .auswahl-buttons{
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .auswahl-button{
+    white-space: normal;    /* falls es wirklich eng wird */
+  }
+
+  .belegung-anzeige-button{
+    width: 100%;
+  }
+}
+
+/* Sehr klein: etwas kompakter */
+@media (max-width: 480px){
+  .auswahl-button{
+    min-height: 52px;
+    font-size: 16px;
+  }
+  .belegung-anzeige-button{
+    min-height: 62px;
+    font-size: 16px;
+  }
+}
+
+/* Desktop: Buttons kleiner machen */
+@media (min-width: 1025px){
+  .auswahl-buttons{
+    width: min(820px, 100%);
+    gap: 28px;
+  }
+
+  .auswahl-button{
+    min-height: 58px;
+    padding: 10px 18px;
+    font-size: 18px;
+  }
+
+  .belegung-anzeige-button{
+    width: min(740px, 100%);
+    min-height: 70px;
+    padding: 14px 22px;
+    font-size: 20px;
+  }
+}
+
+/* Desktop – Bank kleiner */
+@media (min-width: 1025px){
+  body .weisser-rahmen .deko-elemente .bank{
+    height: calc(var(--scene-h) * 0.55) !important;
+    max-width: min(420px, 48vw) !important;
+  }
+}
+
+
