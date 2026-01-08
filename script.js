@@ -561,23 +561,6 @@ async function loadAverage(day, hour) {
 document.addEventListener('DOMContentLoaded', () => {
   const scrollButton = document.querySelector('.belegung-anzeige-button');
   const strassenbereich = document.querySelector('.strassenbereich');
-
-  if (!scrollButton || !strassenbereich) return;
-
-  scrollButton.addEventListener('click', () => {
-    const offsetTop =
-      strassenbereich.getBoundingClientRect().top + window.pageYOffset;
-
-    window.scrollTo({
-      top: offsetTop,
-      behavior: 'smooth'
-    });
-  });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  const scrollButton = document.querySelector('.belegung-anzeige-button');
-  const strassenbereich = document.querySelector('.strassenbereich');
   const daySelect = document.querySelector('.select-wochentag');
   const timeSelect = document.querySelector('.select-uhrzeit');
 

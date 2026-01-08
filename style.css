@@ -54,14 +54,6 @@ p {
   margin: 5px auto 40px auto;
 }
 
-.p-icon {
-  width: 1em;
-  height: 1em;
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: -45px;
-}
-
 .titel-text {
   display: inline-block;
   line-height: 1;
@@ -78,25 +70,14 @@ p {
   z-index: 1;
 }
 
-.auswahl-buttons {
-  display: flex;
-  gap: 40px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
 .auswahl-button {
   background: #0086EC;
   color: white;
   font-weight: bold;
   border: 4px solid white;
-  border-radius: 10px;
-  padding: 14px 30px;
-  font-size: 20px;
   text-align: center;
   appearance: none;
   cursor: pointer;
-  width: 240px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -193,28 +174,6 @@ p {
   z-index: 0;
 }
 
-.deko-elemente .baum {
-  position: absolute;
-  left: -35px;
-  bottom: 0;
-}
-
-.deko-elemente .parkuhr {
-  position: absolute;
-  right: -20px;
-  bottom: 0;
-}
-
-.deko-elemente .bank {
-  position: relative;
-  z-index: 0;
-}
-
-.deko-elemente svg {
-  max-height: var(--scene-h);
-  height: auto;
-}
-
 .strassenbereich {
   width: 98vw;          
   margin: 40px auto;   
@@ -226,15 +185,6 @@ p {
   width: 100%;
   height: auto;
   display: block; 
-}
-
-.charts-grid {
-  width: 90vw;
-  max-width: 1200px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
 }
 
 #charts{
@@ -328,19 +278,6 @@ p {
   margin: 0;
 }
 
-.road-stage{
-  position: relative;
-  width: 98vw;
-  max-width: 1200px;            
-  margin: 0 auto;
-}
-
-.hintergrund-strasse{
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
 .charts-overlay{
   position: absolute;
   inset: 0;                     
@@ -387,25 +324,6 @@ p {
   height: 100%;
   border: 0;
   display: block;
-}
-
-.overlay{
-  width: 714px;
-  height: 820px;
-  border-radius: 16px;
-  border: 21px solid #FFF;
-  background: #747474;
-
-  position: fixed;                 
-  left: 50%;
-  transform: translateX(-50%);
-
-  display: none;
-  z-index: 9999;
-  box-sizing: border-box;
-
-  padding: 24px;                   
-  overflow: hidden;                
 }
 
 .overlay-chart-wrap{
@@ -498,32 +416,6 @@ p {
   max-width: 320px;
 }
 
-.overlay-nodata{
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 16px;
-  box-sizing: border-box;
-}
-
-.overlay-nodata-title{
-  font-size: 18px;
-  font-weight: 800;
-  color: #333;
-}
-
-.overlay-nodata-sub{
-  margin-top: 6px;
-  font-size: 13px;
-  color: #666;
-  line-height: 1.35;
-  max-width: 320px;
-}
-
 .overlay{
   width: min(714px, 94vw);
   max-height: 88vh;          
@@ -531,7 +423,6 @@ p {
   border-radius: 16px;
   border: 21px solid #FFF;
   background: #747474;
-
   position: fixed;
   left: 50%;
   top: 50%;
@@ -548,15 +439,6 @@ p {
   flex-direction: column;    
 }
 
-#overlay{
-  display: none;
-}
-
-#overlay{
-  max-height: 88vh;     
-  overflow: hidden;     
-}
-
 #overlay .overlay-content{
   height: 100%;
   max-height: 88vh;     
@@ -564,8 +446,6 @@ p {
   -webkit-overflow-scrolling: touch;
   box-sizing: border-box;
 }
-
-
 
 @media (max-width: 1570px) {
   h1 { 
@@ -642,13 +522,6 @@ p {
     --scene-h: clamp(120px, 30vw, 260px);
     --scene-gap: 18px;
   }
-
-  .deko-elemente{
-    width: 96%;
-  }
-
-  .deko-elemente .baum{ left: -10px; }
-  .deko-elemente .parkuhr{ right: -10px; }
 
   .chart-card{
     width: 280px;
@@ -745,12 +618,6 @@ p {
     min-height: 650px;
   }
 
-  .auswahl-buttons{
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-  }
-
   .auswahl-button{
     width: min(420px, 86vw);
     font-size: 17px;
@@ -767,13 +634,6 @@ p {
     --scene-h: clamp(110px, 32vw, 220px);
     --scene-gap: 16px;
   }
-
-  .deko-elemente{
-    width: 98%;
-  }
-
-  .deko-elemente .baum{ left: -6px; }
-  .deko-elemente .parkuhr{ right: -6px; }
 
   .chart-card{
     width: 240px;
@@ -845,79 +705,6 @@ p {
   }
 }
 
-@media (max-width: 768px){
-  .deko-elemente{
-    position: relative !important;
-    left: auto !important;
-    bottom: auto !important;
-    transform: none !important;
-
-    width: fit-content !important;
-    max-width: 100%;
-    margin: 0 auto;
-
-    display: flex !important;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 0 !important;           
-    padding: 0 8px !important;   
-    box-sizing: border-box;
-    margin-top: 40px;
-  }
-
-  .deko-elemente .baum,
-  .deko-elemente .bank,
-  .deko-elemente .parkuhr{
-    position: static !important;
-    left: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-  }
-
-  .deko-elemente .bank{
-    height: 150px !important;     
-    width: auto !important;
-    transform: scale(0.78);
-    transform-origin: bottom center;
-    z-index: 2;                   
-  }
-
-  .deko-elemente .baum{
-    height: 125px !important;
-    width: auto !important;
-    margin-right: -26px;          
-    z-index: 1;
-  }
-
-  .deko-elemente .parkuhr{
-    height: 135px !important;
-    width: auto !important;
-    margin-left: -18px;           
-    z-index: 1;
-  }
-}
-
-@media (max-width: 480px){
-  .deko-elemente{ padding: 0 6px !important;
-    margin-bottom: -140px;
-  }
-
-  .deko-elemente .bank{
-    height: 135px !important;
-    transform: scale(0.75);
-  }
-
-  .deko-elemente .baum{
-    height: 115px !important;
-    margin-right: -30px;
-  }
-
-  .deko-elemente .parkuhr{
-    height: 125px !important;
-    margin-left: -22px;
-  }
-}
-
 @media (max-width: 768px) {
   .rahmen-inhalt{
     width: 100%;
@@ -939,7 +726,6 @@ p {
 }
 
 @media (max-width: 480px) {
-
   .auswahl-button{
     max-width: 300px;
   }
@@ -985,14 +771,6 @@ p {
     padding: 0;
     box-shadow: 0 8px 16px rgba(0,0,0,0.20);
   }
-
-  .chart-card.pin-mode .details-btn::before{
-    content: "P";
-    position: absolute;
-    inset: 0;
-    display: grid;
-  }
-
 }
 
 .overlay-pie-wrap{
@@ -1005,100 +783,11 @@ p {
   }
 }
 
-@media (max-width: 480px){
-
-  .overlay{
-    height: 88vh;              
-    max-height: 88vh;
-    overflow: hidden;          
-  }
-
-  .overlay-content{
-    height: 100%;
-    overflow-y: auto;          
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 18px;     
-  }
-
-  .map-wrap{ height: 220px; }
-  .overlay-pie-wrap{ height: 210px; }     
-  .overlay-chart-wrap{ height: 240px; }
-
-  .overlay-content::-webkit-scrollbar{
-    width: 8px;
-  }
-}
-
 .chart-card{
   z-index: 10;
 }
 
 @media (max-width: 480px){
-
-  .chart-card.pin-mode .details-btn{
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    padding: 0;
-
-    background: #0086EC;
-    border: 4px solid #fff;
-
-    position: relative;     
-    color: transparent;     
-  }
-
-  .chart-card.pin-mode .details-btn::before{
-    content: "P";
-
-    position: absolute;     
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    font-size: 24px;
-    font-weight: 800;
-    color: #fff;
-    line-height: 1;
-  }
-
-  .chart-card.pin-mode .details-btn::after{
-    content: none;
-  }
-}
-
-@media (max-width: 480px){
-
-  .chart-card.pin-mode{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transform: translate(-50%, -50%);
-  }
-
-  .chart-card.pin-mode::after{
-    content: attr(data-name);
-    margin-top: 8px;
-
-    font-size: 10px;         
-    font-weight: 700;
-    line-height: 1.2;
-
-    color: #003a6b;
-    background: #ffffff;
-
-    padding: 4px 8px;         
-    border-radius: 8px;
-
-    white-space: nowrap;
-    pointer-events: none;
-
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15); 
-  }
-}
-
-@media (max-width: 480px){
-
   .chart-card.pin-mode{
     display: flex !important;
     flex-direction: column !important;
@@ -1134,80 +823,9 @@ p {
     white-space: nowrap;
     pointer-events: none;
   }
-
-  .chart-card.pin-mode::after{
-    content: none !important;
-  }
-}
-
-@media (max-width: 480px){
-  .chart-card.pin-mode .pin-label{
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-}
-
-@media (max-width: 480px){
-
-  .chart-card.pin-mode{
-    display: flex;
-    flex-direction: column;
-    align-items: center;   
-    gap: 8px;
-    padding: 0;
-    background: transparent;
-    box-shadow: none;
-  }
-
-  .chart-card.pin-mode .details-btn{
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    padding: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin: 0 auto;        
-    position: static !important;
-
-    background: #0086EC;
-    border: 4px solid #fff;
-    color: #fff;
-
-    font-size: 24px;
-    font-weight: 800;
-    line-height: 1;
-  }
-
-  .chart-card.pin-mode .pin-letter{
-    display: inline-block;
-    transform: translate(0px, 2px); 
-  }
-
-  .chart-card.pin-mode .pin-label{
-    display: inline-block;
-    text-align: center;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1.2;
-    padding: 4px 10px;
-    border-radius: 10px;
-    background: #fff;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    white-space: nowrap;
-  }
-
-  .chart-card.pin-mode .details-btn::before,
-  .chart-card.pin-mode .details-btn::after{
-    content: none !important;
-  }
 }
 
 @media (max-width: 1300px){
-
   .chart-card.pin-mode{
     background: transparent !important;
     box-shadow: none !important;
@@ -1267,23 +885,6 @@ p {
 }
 
 @media (max-width: 1024px){
-  .chart-card.pin-mode .details-btn{
-    width: 62px;
-    height: 62px;
-    font-size: 26px;
-  }
-  .chart-card.pin-mode .pin-letter{
-    font-size: 26px;
-    transform: translate(0px, 3px);
-  }
-  .chart-card.pin-mode .pin-label{
-    font-size: 15px;
-    padding: 6px 14px;
-  }
-}
-
-@media (max-width: 1024px){
-
   .chart-card:not(.pin-mode){
     width: 260px;
     height: 280px;
@@ -1313,29 +914,7 @@ p {
   }
 }
 
-@media (max-width: 1024px){
-
-  .overlay{
-    width: 94vw;              
-    height: 88vh;
-    max-height: 88vh;
-    overflow: hidden;
-  }
-
-  .overlay-content{
-    height: 100%;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 18px;
-  }
-
-  .map-wrap{ height: 220px; }
-  .overlay-pie-wrap{ height: 210px; }      
-  .overlay-chart-wrap{ height: 240px; }
-}
-
 @media (min-width: 1025px) and (max-width: 1400px){
-
   .chart-card{
     width: 250px !important;
     height: 260px !important;
@@ -1363,22 +942,6 @@ p {
     padding: 5px 10px !important;
     left: 10px !important;
     bottom: 10px !important;
-  }
-}
-
-@media (max-width: 768px){
-  .chart-card.pin-mode .details-btn{
-    width: 56px;
-    height: 56px;
-    font-size: 24px;
-  }
-  .chart-card.pin-mode .pin-letter{
-    font-size: 24px;
-    transform: translate(0px, 2px);
-  }
-  .chart-card.pin-mode .pin-label{
-    font-size: 14px;
-    padding: 4px 10px;
   }
 }
 
@@ -1464,24 +1027,7 @@ p {
   }
 }
 
-@media (max-height: 800px){
-  #overlay{
-    max-height: 94vh;
-  }
-  #overlay .overlay-chart-wrap{
-    height: 360px;
-  }
-}
-
 @media (min-width: 1025px){
-
-  #overlay{
-    width: min(860px, 96vw) !important;
-    height: min(900px, 92vh) !important;   
-    max-height: 92vh !important;
-    overflow: hidden !important;
-  }
-
   #overlay .overlay-content{
     height: 100% !important;
     overflow-y: auto !important;
@@ -1491,7 +1037,8 @@ p {
   }
 
   #overlay .overlay-chart-wrap{
-    height: 420px !important;               
+    height: 420px !important;
+    margin-bottom: 0 !important;               
   }
 
   #overlayDayChart{
@@ -1501,33 +1048,10 @@ p {
 }
 
 @media (max-width: 1024px){
-
   #overlay .overlay-content{
     padding-bottom: 24px !important; 
   }
 
-  #overlay .overlay-chart-wrap{
-    margin-bottom: 0 !important;
-  }
-}
-
-@media (max-width: 1024px){
-  body #overlay.is-open .overlay-content{
-    padding: 80px 16px 24px !important;
-  }
-}
-
-@media (max-width: 480px){
-  body #overlay.is-open .overlay-content{
-    padding: 72px 14px 22px !important;
-  }
-}
-
-@media (max-width: 1024px){
-  body #overlay.is-open .overlay-chart-wrap,
-  body #overlay.is-open .overlay-pie-wrap{
-    margin-bottom: 0 !important; 
-  }
 }
 
 @media (max-width: 1024px){
@@ -1536,10 +1060,6 @@ p {
     display: block;
     height: 24px;          
   }
-}
-
-.weisser-rahmen{
-  position: relative;
 }
 
 body .weisser-rahmen .deko-elemente{
@@ -1576,7 +1096,6 @@ body .weisser-rahmen .deko-elemente .baum{ justify-self: start; }
 body .weisser-rahmen .deko-elemente .bank{ justify-self: center; }
 body .weisser-rahmen .deko-elemente .parkuhr{ justify-self: end; }
 
-
 body .weisser-rahmen .deko-elemente .baum,
 body .weisser-rahmen .deko-elemente .parkuhr{
   height: var(--scene-h) !important;
@@ -1588,26 +1107,6 @@ body .weisser-rahmen .deko-elemente .bank{
   height: calc(var(--scene-h) * 0.70) !important;  
   width: auto !important;
   max-width: min(560px, 56vw) !important;          
-}
-
-
-@media (min-width: 820px) and (max-width: 1200px){
-  body .weisser-rahmen .deko-elemente{
-    column-gap: clamp(12px, 3vw, 70px) !important;
-    width: min(920px, 96%) !important;
-  }
-
-  body .weisser-rahmen .deko-elemente .bank{
-    max-width: min(480px, 52vw) !important;
-    height: calc(var(--scene-h) * 0.62) !important;
-  }
-}
-
-@media (max-width: 600px){
-  body .weisser-rahmen .deko-elemente .bank{
-    height: clamp(100px, 10vw, 85px) !important;
-    max-width: min(210px, 60vw) !important;
-  }
 }
 
 @media (min-width: 1200px){
@@ -1630,13 +1129,6 @@ body .weisser-rahmen .deko-elemente .bank{
   flex-shrink: 0;
 }
 
-.titel-text{
-  line-height: 1;
-}
-
-/* ===== Buttons sauber responsive (ans ENDE der CSS Datei) ===== */
-
-/* Container: 2 Buttons oben -> Grid statt flex-wrap */
 .auswahl-buttons{
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1646,7 +1138,6 @@ body .weisser-rahmen .deko-elemente .bank{
   align-items: stretch;
 }
 
-/* Einheitliche Button-Basis */
 .auswahl-button,
 .belegung-anzeige-button{
   box-sizing: border-box;
@@ -1655,28 +1146,25 @@ body .weisser-rahmen .deko-elemente .bank{
   letter-spacing: 0.5px;
 }
 
-/* Obere Buttons (Wochentag/Uhrzeit) */
 .auswahl-button{
-  width: 100%;              /* wichtig: keine fixe Breite mehr */
+  width: 100%;             
   max-width: none;
   min-height: clamp(54px, 6.2vw, 76px);
   padding: clamp(10px, 1.6vw, 16px) clamp(14px, 2.4vw, 26px);
   font-size: clamp(16px, 1.8vw, 22px);
-  white-space: nowrap;      /* hält "Wochentag" / "Uhrzeit" schön in einer Zeile */
+  white-space: nowrap;      
 }
 
-/* Großer Button darunter */
 .belegung-anzeige-button{
   width: min(820px, 100%);
   max-width: none;
   min-height: clamp(64px, 7vw, 92px);
   padding: clamp(14px, 2.0vw, 20px) clamp(16px, 2.8vw, 34px);
   font-size: clamp(16px, 2.0vw, 24px);
-  white-space: normal;      /* darf umbrechen, falls es eng wird */
+  white-space: normal;      
   text-align: center;
 }
 
-/* Tablet/Mobile: obere Buttons untereinander */
 @media (max-width: 768px){
   .auswahl-buttons{
     grid-template-columns: 1fr;
@@ -1684,7 +1172,7 @@ body .weisser-rahmen .deko-elemente .bank{
   }
 
   .auswahl-button{
-    white-space: normal;    /* falls es wirklich eng wird */
+    white-space: normal;   
   }
 
   .belegung-anzeige-button{
@@ -1692,19 +1180,6 @@ body .weisser-rahmen .deko-elemente .bank{
   }
 }
 
-/* Sehr klein: etwas kompakter */
-@media (max-width: 480px){
-  .auswahl-button{
-    min-height: 52px;
-    font-size: 16px;
-  }
-  .belegung-anzeige-button{
-    min-height: 62px;
-    font-size: 16px;
-  }
-}
-
-/* Desktop: Buttons kleiner machen */
 @media (min-width: 1025px){
   .auswahl-buttons{
     width: min(820px, 100%);
@@ -1725,12 +1200,9 @@ body .weisser-rahmen .deko-elemente .bank{
   }
 }
 
-/* Desktop – Bank kleiner */
 @media (min-width: 1025px){
   body .weisser-rahmen .deko-elemente .bank{
     height: calc(var(--scene-h) * 0.55) !important;
     max-width: min(420px, 48vw) !important;
   }
 }
-
-
